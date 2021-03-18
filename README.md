@@ -1,5 +1,5 @@
 # CV-builder
-A webapp to create a cv from designed templates and export as html or pdf
+The project involves the creation of a CV builder. The user will be able to choose one of several templates and complete the data through a form that will dynamically update the CV view. The data can be saved permanently in the user's profile and then load it into the form in just one click.
 
 ## Table of contents
 * [Technologies](#technologies)
