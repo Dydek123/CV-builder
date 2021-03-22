@@ -61,14 +61,14 @@ $black: #616263;
   flex-direction: column;
   border: 5px solid black;
   padding: 5vh 0;
+}
 
-  h1,
-  h2{
-    text-transform: uppercase;
-    font-family: 'Josefin Sans', sans-serif;
-    font-weight: 700;
-    text-align: center;
-  }
+h1,
+h2{
+  text-transform: uppercase;
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 700;
+  text-align: center;
 }
 
 .box-main{
@@ -233,6 +233,79 @@ $black: #616263;
       position: absolute;
       left: 0;
       bottom: 40%;
+    }
+  }
+}
+
+.what-clients-stays{
+  width: 84vw;
+  height: 100vh;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Lato', sans-serif;
+  h2{
+    font-family: 'Josefin Sans', sans-serif;
+    width: 100%;
+    font-size: 2.2rem;
+  }
+  p{
+    padding-top: 2rem;
+    width: 60%;
+    text-align: center;
+    font-size: 1.3rem;
+  }
+
+  .opinions{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    div{
+      width: 13%;
+      img{
+        width: 100%;
+      }
+      .wrapper{
+        opacity: 0;
+        z-index: -1;
+        position: relative;
+        width: 0;
+        height: 0;
+      }
+      mat-card{
+        position: absolute;
+        width: 200px;
+        bottom: 10%;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .what-clients-stays{
+    width: 84vw;
+    height: auto;
+    h2{
+      font-size: 2.2rem;
+    }
+    p{
+      padding-top: 2rem;
+      width: 100%;
+      text-align: center;
+      font-size: 1.2rem;
+    }
+
+    .opinions{
+      div{
+        width: 25%;
+        img{
+          width: 100%;
+        }
+      }
     }
   }
 }
