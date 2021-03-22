@@ -1,0 +1,238 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+
+$cream: #fef7f3;
+$lightgray: #d9d5d2;
+$darkgray: #888988;
+$blue: #93c2bc;
+$black: #616263;
+
+@mixin flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin setBoxShadow($offset){
+  box-shadow: $offset abs($offset) $blue;
+}
+
+* {
+  margin: 0;
+}
+
+.container{
+  background: $cream;
+  width: 100%;
+  overflow: hidden;
+}
+
+.circle{
+  position: absolute;
+}
+
+.circle-top-left{
+  left: -100px;
+  top: -100px;
+}
+
+.relative-parent {
+  position:relative;
+}
+.hiding-parent {
+  overflow:hidden;
+}
+
+.circle-bottom-right{
+  position: absolute;
+  bottom: -60vh;
+  left: -3vw;
+}
+
+.top{
+  width: 100%;
+  height: 100vh;
+  @include flexCenter();
+}
+
+.box{
+  @include flexCenter();
+  @include setBoxShadow(40px);
+  flex-direction: column;
+  border: 5px solid black;
+  padding: 5vh 0;
+
+  h1,
+  h2{
+    text-transform: uppercase;
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 700;
+    text-align: center;
+  }
+}
+
+.box-main{
+  width: 80vw;
+  height: 50vh;
+  h1{
+    font-size: 3rem;
+    height: 30%;
+  }
+
+  img{
+    padding: 2rem 0;
+  }
+
+  nav{
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 1.5rem;
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    text-transform: uppercase;
+    padding: 6rem 0 0 0;
+    width: 100%;
+    a{
+      text-decoration: none;
+      color: black;
+      width: 20%;
+      text-align: center;
+      transition: all .2s ease-in-out;
+      &:hover{
+        color: $darkgray;
+        transform: scale(1.1);
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .box-main {
+    @include setBoxShadow(20px);
+    h1 {
+      font-size: 2rem;
+    }
+    nav {
+      padding-top: 0;
+      @include flexCenter();
+      flex-direction: column;
+
+      a {
+        padding: 1rem 0;
+        width: 100%;
+      }
+    }
+  }
+
+  .circle-top-left{
+    top: -170px;
+    left: -170px;
+  }
+
+  .circle-bottom-right{
+    transform: scale(0.5);
+    bottom: -70vh;
+    left: -50vw;
+  }
+}
+
+.why-us{
+  @include flexCenter();
+  width: 84vw;
+  margin: 8vh auto;
+  height: 80vh;
+  flex-direction: row;
+  flex-wrap: wrap;
+  font-family: 'Lato', sans-serif;
+  font-size: 1.3rem;
+
+  .why-us__argument{
+    width: 50%;
+    height: 40vh;
+    text-align: center;
+
+    img{
+      width: 100px;
+      padding-top: 3rem;
+    }
+
+    p{
+      padding-top: 1rem;
+      width: 60%;
+      text-align: center;
+      margin: auto;
+    }
+  }
+
+  .why-us__box{
+    @include setBoxShadow(-30px);
+    padding: 5vh 2vw;
+    height: 25vh;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    p{
+      width: 100%;
+      padding-top: 1rem;
+      text-align: left;
+      margin-left: 0;
+    }
+  }
+
+  .why-us__wave-right{
+    position: absolute;
+    right: 0;
+    bottom: 40%;
+  }
+
+  .why-us__wave-left{
+    position: absolute;
+    left: 0;
+    bottom: 40%;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .why-us{
+    @include flexCenter();
+    width: 90vw;
+    margin: 8vh auto;
+    height: auto;
+    font-size: 1.2rem;
+
+    .why-us__argument{
+      width: 80%;
+      height: auto;
+
+      p{
+        width: 100%;
+      }
+    }
+
+    .why-us__box{
+      @include setBoxShadow(-20px);
+      height: auto;
+      h2{
+        width: 100%;
+        text-align: center;
+      }
+      p{
+        width: 100%;
+      }
+    }
+
+    .why-us__wave-right{
+      position: absolute;
+      right: 0;
+      bottom: 40%;
+    }
+
+    .why-us__wave-left{
+      position: absolute;
+      left: 0;
+      bottom: 40%;
+    }
+  }
+}
