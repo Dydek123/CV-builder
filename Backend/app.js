@@ -4,6 +4,14 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+//Database
+const db = require('./config/config');
+
+//Test DB
+db.authenticate()
+    .then(() => console.log('Database connected'))
+    .catch(err=> console.log('Error with connection to DB ' + err))
+
 const indexRouter = require('./routes/index');
 
 const app = express();
