@@ -47,6 +47,14 @@ export default class SecurityController {
         return this.setSuccessResponse();
     }
 
+    public async delete_user(email: string): Promise<responseStatus> {
+        const user = await User.findOne({email});
+        if (!user)
+            return this.setErrorResponse('User does not exist');
+        await User.remove(user);
+        return this.setSuccessResponse();
+    }
+
     private setErrorResponse(error: string): responseStatus {
         return {status: 'error', errors: [error]};
     }

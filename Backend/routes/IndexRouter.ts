@@ -33,6 +33,12 @@ export class IndexRouter {
             const response:responseStatus =  await this.securityController.updatePassword(body);
             res.json(response);
         })
+
+        this.router.delete('/removeUser', async (req: Request, res: Response): Promise<void> => {
+            const { email } = req.body
+            const response:responseStatus =  await this.securityController.delete_user(email);
+            res.json(response);
+        })
     }
 
     private isEmptyLogin = (login:string, password:string):boolean => {

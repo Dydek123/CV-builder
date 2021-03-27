@@ -1,3 +1,8 @@
-node_modules/
-config/
 .idea/
+.vscode/
+node_modules/
+build/
+tmp/
+temp/
+Backend/.env
+Backend/migration
