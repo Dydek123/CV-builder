@@ -1,5 +1,5 @@
-import {Express, Request, Response, Router, Application} from "express";
-import * as express from 'express';
+import * as express from "express";
+import {Express, Router} from "express";
 import * as path from "path";
 import * as logger from 'morgan';
 import * as cookieParser from 'cookie-parser';
@@ -7,7 +7,7 @@ import {IndexRouter} from "./routes/IndexRouter";
 
 export class Server {
     private app: Express;
-    private router:Router = express.Router();
+    private router: Router = express.Router();
 
     constructor(app: Express) {
         this.app = app;
