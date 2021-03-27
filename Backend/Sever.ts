@@ -3,7 +3,7 @@ import * as express from 'express';
 import * as path from "path";
 import * as logger from 'morgan';
 import * as cookieParser from 'cookie-parser';
-// import {IndexRouter} from "./Routes/IndexRouter";
+import {IndexRouter} from "./routes/IndexRouter";
 
 export class Server {
     private app: Express;
@@ -17,13 +17,13 @@ export class Server {
         this.app.use(express.json());
         this.app.use(express.urlencoded({extended: false}));
         this.app.use(cookieParser());
-        // const indexRouter = new IndexRouter(this.router);
-        // this.app.use('/', indexRouter.router);
+        const indexRouter = new IndexRouter(this.router);
+        this.app.use('/', indexRouter.router);
 
-        this.app.get("*", (req: Request, res: Response): void => {
-            res.send('Hello from routing');
-            // res.sendFile(path.resolve("./" + 'build/frontend/index.html'))
-        })
+        // this.app.get("*", (req: Request, res: Response): void => {
+        //     res.send('Hello from routing');
+        //     // res.sendFile(path.resolve("./" + 'build/frontend/index.html'))
+        // })
 
     }
 
