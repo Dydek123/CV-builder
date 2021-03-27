@@ -7,6 +7,8 @@ import {User} from "../entity/User";
 import SecurityController from "../controllers/SecurityController";
 import loginData from "../interfaces/loginData";
 import responseStatus from "../interfaces/responseStatus";
+import registerData from "../interfaces/registerData";
+import updateData from "../interfaces/updateData";
 // import SecurityController from "../Controllers/SecurityController"
 
 export class IndexRouter {
@@ -20,12 +22,17 @@ export class IndexRouter {
             res.json(response);
         })
 
-        // this.router.post('/register', async (req: Request, res: Response): Promise<void> => {
-        //     const body: registerData = req.body
-        //     const securityController = new SecurityController();
-        //     const user = await securityController.new_user(body.login, body.password, body.email);
-        //     res.json(user);
-        // })
+        this.router.post('/register', async (req: Request, res: Response): Promise<void> => {
+            const body: registerData = req.body
+            const response:responseStatus =  await this.securityController.register_user(body);
+            res.json(response);
+        })
+
+        this.router.put('/updatePassword', async (req: Request, res: Response): Promise<void> => {
+            const body: updateData = req.body
+            const response:responseStatus =  await this.securityController.updatePassword(body);
+            res.json(response);
+        })
     }
 
     private isEmptyLogin = (login:string, password:string):boolean => {

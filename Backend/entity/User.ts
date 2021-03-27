@@ -12,14 +12,10 @@ export class User extends BaseEntity{
     id_details:number
 
     @Column()
-    @Length(2, 100, { message: 'The login must be at least 2 but not longer than 100 characters' })
-    login: string;
-
-    @Column()
     @Length(6, 100, { message: 'The password must be at least 6 but not longer than 100 characters' })
     password: string;
 
-    @Column()
+    @Column({unique:true})
     @IsEmail({}, { message: 'Incorrect email' })
     email: string;
 

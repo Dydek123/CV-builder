@@ -1,5 +1,5 @@
 export default interface registerData {
-    login: string,
     password: string,
+    repeatPassword: string,
     email: string
 }
