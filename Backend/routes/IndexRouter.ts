@@ -4,38 +4,20 @@ import * as path from "path";
 import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import {User} from "../entity/User";
+import SecurityController from "../controllers/SecurityController";
+import loginData from "../interfaces/loginData";
+import responseStatus from "../interfaces/responseStatus";
 // import SecurityController from "../Controllers/SecurityController"
-
-interface loginData {
-    login: string,
-    password: string
-}
-
-interface registerData {
-    login: string,
-    password: string,
-    email: string
-}
 
 export class IndexRouter {
     public router: Router;
-
+    private securityController = new SecurityController();
     constructor(router: Router) {
         this.router = router;
         this.router.post('/login', async (req: Request, res: Response): Promise<void> => {
-            const body: loginData = req.body
-            let status: string = '';
-            let errors: string[] = [];
-            if(this.isEmptyLogin(body.login, body.password)){
-                console.log(123)
-                status = 'error';
-                errors.push('Login is empty');
-                res.json(errors)
-            } else {
-                // const securityController = new SecurityController();
-                // const user = await securityController.login_user(body.login, body.password);
-                res.json(body);
-            }
+            const body: loginData = req.body;
+            const response:responseStatus =  await this.securityController.login_user(body);
+            res.json(response);
         })
 
         // this.router.post('/register', async (req: Request, res: Response): Promise<void> => {
