@@ -4,6 +4,7 @@ import loginData from "../interfaces/loginData";
 import responseStatus from "../interfaces/responseStatus";
 import registerData from "../interfaces/registerData";
 import updateData from "../interfaces/updateData";
+import detailsI from "../interfaces/detailsI";
 
 export class IndexRouter {
     public router: Router;
@@ -32,6 +33,12 @@ export class IndexRouter {
         this.router.delete('/removeUser', async (req: Request, res: Response): Promise<void> => {
             const {email} = req.body
             const response: responseStatus = await this.securityController.delete_user(email);
+            res.json(response);
+        })
+
+        this.router.post('/addDetails', async (req: Request, res: Response): Promise<void> => {
+            const body: detailsI = req.body
+            const response: responseStatus = await this.securityController.add_user_details(body);
             res.json(response);
         })
     }

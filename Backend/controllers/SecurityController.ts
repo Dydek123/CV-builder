@@ -2,8 +2,10 @@ import * as strength from 'strength';
 import loginData from "../interfaces/loginData";
 import responseStatus from "../interfaces/responseStatus";
 import {User} from "../entity/User";
+import {Details} from "../entity/Details";
 import registerData from "../interfaces/registerData";
 import updateData from "../interfaces/updateData";
+import detailsI from '../interfaces/detailsI';
 
 export default class SecurityController {
     private passwordMinimalStrength: number = 2.5; // Describe password strength from 0 to 5
@@ -55,6 +57,18 @@ export default class SecurityController {
         return this.setSuccessResponse();
     }
 
+    public async add_user_details(detailsData: detailsI): Promise<responseStatus> {
+        if (!Object.keys(detailsData).length) return this.setErrorResponse('Set some data');
+        return this.createNewDetails(detailsData);
+    }
+
+    public async edit_user_details(detailsData: detailsI): Promise<responseStatus> {
+        if (!Object.keys(detailsData).length) return this.setErrorResponse('Set some data');
+        return await this.setSuccessResponse();
+    }
+
+
+    //PRIVATE
     private setErrorResponse(error: string): responseStatus {
         return {status: 'error', errors: [error]};
     }
@@ -83,5 +97,33 @@ export default class SecurityController {
     private passwordIsStrong(password: string): boolean {
         //TODO change strength condition
         return !(strength(password) < this.passwordMinimalStrength || password.length < this.passwordMinimalLength);
+    }
+
+    private async setNewDetails(detailsData: detailsI): Promise<void>{
+        const details = await Details.findOne(1); // TODO change to id from session
+        const items = ['hard_skills', 'soft_skills', 'name', 'surname', 'email', 'phone_number', 'address', 'about', 'image', 'agreement']
+        for (const item of items) {
+            details[item] = detailsData[item] || null;
+        }
+        await Details.save(details);
+    }
+
+    private async createNewDetails(detailsData: detailsI): Promise<responseStatus> {
+        const details = new Details();
+        const items = ['hard_skills', 'soft_skills', 'name', 'surname', 'email', 'phone_number', 'address', 'about', 'image', 'agreement'];
+        const user = await User.findOne(13); //TODO change to id from session
+        //TODO check if user is logged
+        if (!user)
+            return this.setErrorResponse('User does not exist');
+
+        for (const item of items) {
+            details[item] = detailsData[item] || null;
+        }
+        details.id_experiences = null; //TODO change
+        await Details.save(details)
+        
+        user.id_details = details.id_detail;
+        await User.save(user);
+        return this.setSuccessResponse();
     }
 }
