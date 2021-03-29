@@ -6,10 +6,13 @@ import registerData from "../interfaces/registerData";
 import updateData from "../interfaces/updateData";
 import detailsI from "../interfaces/detailsI";
 import experienceI from "../interfaces/experienceI";
+import CvController from "../controllers/CvController";
+import stylesI from "../interfaces/stylesI";
 
 export class IndexRouter {
     public router: Router;
     private securityController = new SecurityController();
+    private cvController: any = new CvController();
 
     constructor(router: Router) {
         this.router = router;
@@ -71,6 +74,17 @@ export class IndexRouter {
         this.router.put('/editExperience', async (req: Request, res: Response): Promise<void> => {
             const body: experienceI = req.body;
             const response: responseStatus = await this.securityController.editExperience(body);
+            res.json(response);
+        })
+
+        //Styles
+        this.router.get('/getStyles', async (req: Request, res: Response): Promise<void> => {
+            res.json(await this.cvController.getStyles());
+        })
+
+        this.router.post('/newStyle', async (req: Request, res: Response): Promise<void> => {
+            const body: stylesI = req.body;
+            const response: responseStatus = await this.cvController.newStyle(body);
             res.json(response);
         })
     }
