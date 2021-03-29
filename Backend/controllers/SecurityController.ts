@@ -64,7 +64,8 @@ export default class SecurityController {
 
     public async edit_user_details(detailsData: detailsI): Promise<responseStatus> {
         if (!Object.keys(detailsData).length) return this.setErrorResponse('Set some data');
-        return await this.setSuccessResponse();
+        await this.setNewDetails(detailsData);
+        return this.setSuccessResponse();
     }
 
 
@@ -101,7 +102,7 @@ export default class SecurityController {
 
     private async setNewDetails(detailsData: detailsI): Promise<void>{
         const details = await Details.findOne(1); // TODO change to id from session
-        const items = ['hard_skills', 'soft_skills', 'name', 'surname', 'email', 'phone_number', 'address', 'about', 'image', 'agreement']
+        const items = ['hard_skills', 'soft_skills', 'name', 'surname', 'email', 'phone_number', 'address', 'about', 'image', 'agreement', 'language'];
         for (const item of items) {
             details[item] = detailsData[item] || null;
         }
@@ -110,7 +111,7 @@ export default class SecurityController {
 
     private async createNewDetails(detailsData: detailsI): Promise<responseStatus> {
         const details = new Details();
-        const items = ['hard_skills', 'soft_skills', 'name', 'surname', 'email', 'phone_number', 'address', 'about', 'image', 'agreement'];
+        const items = ['hard_skills', 'soft_skills', 'name', 'surname', 'email', 'phone_number', 'address', 'about', 'image', 'agreement', 'language'];
         const user = await User.findOne(13); //TODO change to id from session
         //TODO check if user is logged
         if (!user)
@@ -121,7 +122,7 @@ export default class SecurityController {
         }
         details.id_experiences = null; //TODO change
         await Details.save(details)
-        
+
         user.id_details = details.id_detail;
         await User.save(user);
         return this.setSuccessResponse();

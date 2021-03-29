@@ -41,6 +41,12 @@ export class IndexRouter {
             const response: responseStatus = await this.securityController.add_user_details(body);
             res.json(response);
         })
+
+        this.router.put('/editDetails', async (req: Request, res: Response): Promise<void> => {
+            const body: detailsI = req.body
+            const response: responseStatus = await this.securityController.edit_user_details(body);
+            res.json(response);
+        })
     }
 
     private isEmptyLogin = (login: string, password: string): boolean => {
