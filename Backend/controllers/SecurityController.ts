@@ -6,6 +6,8 @@ import {Details} from "../entity/Details";
 import registerData from "../interfaces/registerData";
 import updateData from "../interfaces/updateData";
 import detailsI from '../interfaces/detailsI';
+import experienceI from "../interfaces/experienceI";
+import {Experience} from "../entity/Experience";
 
 export default class SecurityController {
     private passwordMinimalStrength: number = 2.5; // Describe password strength from 0 to 5
@@ -68,6 +70,23 @@ export default class SecurityController {
         return this.setSuccessResponse();
     }
 
+    public async getUser(id: number) {
+        return await Details.findOne(id);
+    }
+
+    public async addNewExperience(experience: experienceI): Promise<responseStatus> {
+        if (!Object.keys(experience).length) return this.setErrorResponse('Set some data');
+        return this.createNewExperience(experience, 1); //TODO set id_details
+    }
+
+    public async editExperience(experience: experienceI): Promise<responseStatus> {
+        if (!Object.keys(experience).length) return this.setErrorResponse('Set some data');
+        return this.setNewExperience(experience);
+    }
+
+    public async getExperience(id: number) {
+        return await Experience.find({id_details: id});
+    }
 
     //PRIVATE
     private setErrorResponse(error: string): responseStatus {
@@ -84,7 +103,6 @@ export default class SecurityController {
 
     private async createUser(register_data: registerData) {
         const user = new User();
-        user.id_details = 1;
         user.password = register_data.password;
         user.email = register_data.email;
         try {
@@ -100,31 +118,59 @@ export default class SecurityController {
         return !(strength(password) < this.passwordMinimalStrength || password.length < this.passwordMinimalLength);
     }
 
-    private async setNewDetails(detailsData: detailsI): Promise<void>{
-        const details = await Details.findOne(1); // TODO change to id from session
+    private async setNewDetails(detailsData: detailsI): Promise<void> {
+        const details = await Details.findOne(1); // TODO change to id from choose
         const items = ['hard_skills', 'soft_skills', 'name', 'surname', 'email', 'phone_number', 'address', 'about', 'image', 'agreement', 'language'];
         for (const item of items) {
             details[item] = detailsData[item] || null;
         }
+        details.id_user = 1 // TODO id from session
         await Details.save(details);
     }
 
     private async createNewDetails(detailsData: detailsI): Promise<responseStatus> {
         const details = new Details();
         const items = ['hard_skills', 'soft_skills', 'name', 'surname', 'email', 'phone_number', 'address', 'about', 'image', 'agreement', 'language'];
-        const user = await User.findOne(13); //TODO change to id from session
         //TODO check if user is logged
-        if (!user)
-            return this.setErrorResponse('User does not exist');
-
         for (const item of items) {
             details[item] = detailsData[item] || null;
         }
-        details.id_experiences = null; //TODO change
+        details.id_user = 1; //TODO id from session
         await Details.save(details)
 
-        user.id_details = details.id_detail;
-        await User.save(user);
         return this.setSuccessResponse();
+    }
+
+    private async createNewExperience(experience: experienceI, id_details: number): Promise<responseStatus> {
+        const newExperience = new Experience();
+        const items = ['place', 'start_date', 'end_date', 'description'];
+        for (const item of items) {
+            newExperience[item] = experience[item] || null;
+        }
+        newExperience.is_actual = !experience.end_date;
+        newExperience.id_details = id_details;
+        try {
+            await Experience.save(newExperience);
+            return this.setSuccessResponse();
+        } catch (error) {
+            console.log(error)
+            return this.setErrorResponse('Error while creating new experience');
+        }
+    }
+
+    private async setNewExperience(experience: experienceI): Promise<responseStatus> {
+        const newExperience = await Experience.findOne(experience.id_experience);
+        const items = ['place', 'start_date', 'end_date', 'description'];
+        for (const item of items) {
+            newExperience[item] = experience[item] || null;
+        }
+        newExperience.is_actual = !experience.end_date;
+        try {
+            await Experience.save(newExperience);
+            return this.setSuccessResponse();
+        } catch (error) {
+            console.log(error)
+            return this.setErrorResponse('Error while creating new experience');
+        }
     }
 }

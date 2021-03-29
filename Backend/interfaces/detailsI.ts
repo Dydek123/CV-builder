@@ -1,6 +1,6 @@
 export default interface loginData {
     id_details?: number,
-    id_experiences?: number,
+    id_user?: number,
     hard_skills?: string,
     soft_skills?: string,
     name?: string,

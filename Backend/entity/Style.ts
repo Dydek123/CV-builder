@@ -1,7 +1,7 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
+import {BaseEntity, Column, Entity, PrimaryGeneratedColumn} from "typeorm";
 
 @Entity('style')
-export class Style extends BaseEntity{
+export class Style extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id_style: number;

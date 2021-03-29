@@ -1,14 +1,14 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, Unique} from "typeorm";
-import {IsEmail, Length} from "class-validator";
+import {BaseEntity, Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {IsEmail} from "class-validator";
 
 @Entity('details')
-export class Details extends BaseEntity{
+export class Details extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id_detail: number;
 
     @Column()
-    id_experiences:number
+    id_user: number
 
     @Column()
     hard_skills: string;
@@ -23,7 +23,7 @@ export class Details extends BaseEntity{
     surname: string;
 
     @Column()
-    @IsEmail({}, { message: 'Incorrect email' })
+    @IsEmail({}, {message: 'Incorrect email'})
     email: string;
 
     @Column()
@@ -41,6 +41,6 @@ export class Details extends BaseEntity{
     @Column()
     agreement: boolean;
 
-    @Column("text", {array:true})
+    @Column("text", {array: true})
     language: string[];
 }
