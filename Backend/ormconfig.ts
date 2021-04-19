@@ -6,7 +6,7 @@ export default {
    "username": process.env.USERDB,
    "password": process.env.PASSWORD,
    "database": process.env.DATABASE,
-   "synchronize": true,
+   "synchronize": false,
    "logging": false,
    "ssl": true,
    "extra": {
