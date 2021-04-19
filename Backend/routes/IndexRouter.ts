@@ -8,6 +8,7 @@ import detailsI from "../interfaces/detailsI";
 import experienceI from "../interfaces/experienceI";
 import CvController from "../controllers/CvController";
 import stylesI from "../interfaces/stylesI";
+import templateI from "../interfaces/templateI";
 
 export class IndexRouter {
     public router: Router;
@@ -84,7 +85,23 @@ export class IndexRouter {
 
         this.router.post('/newStyle', async (req: Request, res: Response): Promise<void> => {
             const body: stylesI = req.body;
-            const response: responseStatus = await this.cvController.newStyle(body);
+            const response: responseStatus = await this.cvController.createStyle(body);
+            res.json(response);
+        })
+
+        //Template
+        this.router.get('/getTemplates', async (req: Request, res: Response): Promise<void> => {
+            res.json(await this.cvController.getTemplates());
+        })
+
+        this.router.get('/getTemplate/:id', async (req: Request, res: Response): Promise<void> => {
+            const id:number = +req.params.id;
+            res.json(await this.cvController.getTemplate(id));
+        })
+
+        this.router.post('/newTemplate', async (req: Request, res: Response): Promise<void> => {
+            const body: templateI = req.body;
+            const response: responseStatus = await this.cvController.createTemplate(body);
             res.json(response);
         })
     }
