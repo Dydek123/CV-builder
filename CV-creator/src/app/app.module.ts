@@ -14,6 +14,7 @@ import { AppRegisterComponent } from './app-register/app-register.component';
 import { ProfileComponent } from './profile/profile.component'
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
+import {DialogComponent} from "./profile/dialog/dialog.component";
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MainPageComponent,
     AppRegisterComponent,
     ProfileComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,

@@ -29,13 +29,14 @@ $black: #616263;
 
 header{
   height: 8vh;
-  p{
+  a{
     display: flex;
     align-items: center;
     padding-left: 3vw;
     height: 100%;
     font-family: 'Josefin Sans', sans-serif;
     font-size: 2rem;
+    text-decoration: none;
     color: $darkgray;
   }
 }
@@ -123,6 +124,11 @@ section{
       font-size: 1.5rem;
       color: #001694;
       height: 2rem;
+      transition: all ease-in-out .3s;
+      &:hover{
+        color: $blue;
+        transform: scale(1.03);
+      }
     }
     div{
       width: 55%;

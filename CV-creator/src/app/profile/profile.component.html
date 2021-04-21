@@ -1,11 +1,11 @@
 <div class="container">
   <header>
-    <p>Go back</p>
+    <a href="#">Go back</a>
   </header>
   <section>
     <aside>
       <div class="box">
-        <img src="assets/example_photo.jpg" (click)="openDialog()">
+        <img src="assets/example_photo.jpg" alt="CV-photo">
       </div>
     </aside>
     <article>
@@ -37,11 +37,10 @@
               <a href="#">Download</a>
               <a href="#">Copy link</a>
             </div>
-            <img src="assets/{{project.preview}}">
+            <img src="assets/{{project.preview}}" alt="{{project.preview}} template preview">
           </div>
         </div>
       </mat-expansion-panel>
-
     </article>
   </section>
 </div>
