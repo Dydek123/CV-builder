@@ -5,7 +5,7 @@
   <section>
     <aside>
       <div class="box">
-        <img src="assets/example_photo.jpg" alt="CV-photo" (click)="openDialog()">
+        <img src="assets/example_photo.jpg" alt="CV-photo" (click)="openNewPhotoDialog()">
       </div>
     </aside>
     <article>
@@ -18,7 +18,7 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <p *ngFor="let detail of details">
-            <a href="#" class="user-details-info">{{detail.name}}</a>
+            <button href="#" class="user-details-info" (click)="openEditDetailsDialog()">{{detail.name}}</button>
           </p>
         </mat-expansion-panel>
 

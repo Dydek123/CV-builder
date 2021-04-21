@@ -1,6 +1,7 @@
 import { Component} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {DialogComponent} from "./dialog/dialog.component";
+import {EditDetailsComponent} from "./edit_details/edit_details.component";
 
 @Component({
   selector: 'app-profile',
@@ -25,8 +26,16 @@ export class ProfileComponent{
   ]
 
   constructor(public dialog:MatDialog) {};
-  openDialog(): void {
+  openNewPhotoDialog(): void {
     const dialogRef = this.dialog.open(DialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  openEditDetailsDialog(): void {
+    const dialogRef = this.dialog.open(EditDetailsComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');

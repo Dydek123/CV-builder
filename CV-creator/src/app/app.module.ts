@@ -16,6 +16,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
 import {DialogComponent} from "./profile/dialog/dialog.component";
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import {EditDetailsComponent} from "./profile/edit_details/edit_details.component";
+import {TextFieldModule} from '@angular/cdk/text-field';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { NgxMatFileInputModule } from '@angular-material-components/file-input';
     MainPageComponent,
     AppRegisterComponent,
     ProfileComponent,
-    DialogComponent
+    DialogComponent,
+    EditDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -37,6 +40,7 @@ import { NgxMatFileInputModule } from '@angular-material-components/file-input';
     MatExpansionModule,
     MatDialogModule,
     NgxMatFileInputModule,
+    TextFieldModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
