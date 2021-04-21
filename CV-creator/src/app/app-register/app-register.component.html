@@ -1,0 +1,27 @@
+<div class="container">
+  <h1>CV-Builder</h1>
+  <mat-card>
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <mat-label>Login</mat-label>
+        <input matInput name="email" type="email" [(ngModel)]="email">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Password</mat-label>
+        <input matInput name="password" type="password" [(ngModel)]="password">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Password</mat-label>
+        <input matInput name="repeat-password" type="password" [(ngModel)]="repeatPassword">
+      </mat-form-field>
+
+      <button mat-flat-button color="primary" (click)="onRegister()">Create new account</button>
+    </form>
+  </mat-card>
+  <mat-card class="signup">
+    <p>Already have an account? <a href="#">Login now!</a> </p>
+  </mat-card>
+  <p class="message-error">{{message}}</p>
+</div>

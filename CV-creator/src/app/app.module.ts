@@ -9,13 +9,19 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './login/login.component';
-import { MainPageComponent } from './main-page/main-page.component'
+import { MainPageComponent } from './main-page/main-page.component';
+import { AppRegisterComponent } from './app-register/app-register.component';
+import { ProfileComponent } from './profile/profile.component'
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     MainPageComponent,
+    AppRegisterComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,6 +31,8 @@ import { MainPageComponent } from './main-page/main-page.component'
     MatInputModule,
     MatCardModule,
     MatButtonModule,
+    MatExpansionModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

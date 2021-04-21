@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+
+$cream: #fef7f3;
+$lightgray: #d9d5d2;
+$darkgray: #888988;
+$blue: #93c2bc;
+$black: #616263;
+
+@mixin flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin setBoxShadow($offset){
+  box-shadow: $offset abs($offset) $blue;
+}
+
+*{
+  margin: 0;
+}
+
+.container{
+  background: $cream;
+  width: 100%;
+  min-height: 100vh;
+}
+
+header{
+  height: 8vh;
+  p{
+    display: flex;
+    align-items: center;
+    padding-left: 3vw;
+    height: 100%;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 2rem;
+    color: $darkgray;
+  }
+}
+
+.box{
+  @include flexCenter();
+  @include setBoxShadow(40px);
+  flex-direction: column;
+  border: 5px solid black;
+}
+
+section{
+  @include flexCenter();
+  width: 100%;
+  height: 88vh;
+  padding-top: 5vh;
+  font-family: 'Lato', sans-serif;
+  aside{
+    @include flexCenter();
+    height: 100%;
+    align-items: flex-start;
+    width: 50%;
+    div{
+      height: 70vh;
+      img{
+        height: 100%;
+        cursor: pointer;
+        transition: all ease-in-out .2s;
+        &:hover{
+          transform: scale(1.05);
+        }
+      }
+    }
+  }
+  article{
+    @include flexCenter();
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 50%;
+    height: 88vh;
+    a{
+      margin-right: auto;
+      text-decoration: none;
+    }
+  }
+
+  mat-expansion-panel{
+    margin-top: 1rem;
+    width: 80%;
+    background: $cream;
+    i{
+      padding-left: 1rem;
+    }
+    mat-panel-title{
+      color: $blue;
+      font-size: 1.5rem;
+    }
+
+    .user-details-info{
+      line-height: 2rem;
+    }
+  }
+
+  .panel-projects-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .panel-project{
+    @include setBoxShadow(10px);
+    display: flex;
+    flex-direction: row;
+    border: 3px solid black;
+    width: 42%;
+    height: 20vh;
+    padding: 1rem .6rem;
+    margin-bottom: 2rem;
+    h2{
+      font-family: 'Josefin Sans', sans-serif;
+      padding-bottom: 2rem;
+    }
+    a{
+      font-family: 'Lato', sans-serif;
+      font-size: 1.5rem;
+      color: #001694;
+      height: 2rem;
+    }
+    div{
+      width: 55%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    img{
+      width: 40%;
+      margin-right: auto;
+      margin-left: auto;
+    }
+  }
+}
