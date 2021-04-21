@@ -27,6 +27,7 @@ $black: #616263;
   }
 
   .signup{
+
     height: 2rem;
     border-radius: 0 0 4px 4px;
   }
@@ -44,10 +45,17 @@ $black: #616263;
       width: 100%;
     }
 
-    a{
+    .forget-password-label{
       width: 100%;
-      padding: 1rem;
-      text-align: right;
+      padding-top: .5rem;
     }
+    a{
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+  .message-error{
+    color: red;
   }
 }

@@ -4,18 +4,21 @@
     <form class="example-form">
       <mat-form-field class="example-full-width">
         <mat-label>Login</mat-label>
-        <input matInput name="login">
+        <input matInput name="login" [(ngModel)]="login">
       </mat-form-field>
 
       <mat-form-field class="example-full-width">
         <mat-label>Password</mat-label>
-        <input matInput name="password">
+        <input matInput name="password" type="password" [(ngModel)]="password">
       </mat-form-field>
-      <button mat-flat-button color="primary">Login</button>
-      <a href="#">Forgot your password?</a>
+      <button mat-flat-button color="primary" (click)="onLogin()">Login</button>
+      <div class="forget-password-label">
+        <a href="#" class="forget-password-label">Forgot your password?</a>
+      </div>
     </form>
   </mat-card>
   <mat-card class="signup">
     <p>Don't have an account? <a href="#">Join CV-builder now!</a> </p>
   </mat-card>
+  <p class="message-error">{{message}}</p>
 </div>
