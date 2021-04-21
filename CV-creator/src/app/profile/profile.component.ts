@@ -8,7 +8,8 @@ import { Component} from '@angular/core';
 export class ProfileComponent{
   details = [
     {name:'Frontend PK'},
-    {name:'Backend Allegro'}
+    {name:'Backend Allegro'},
+    {name:'Senior Fullstack Developer'},
   ];
 
   projects = [
@@ -16,6 +17,8 @@ export class ProfileComponent{
     {name: 'Backend', preview: 'cv-example.png'},
     {name: 'Java', preview: 'cv-example.png'},
     {name: 'Mobile', preview: 'cv-example.png'},
+    {name: 'Senior Fullstack Developer', preview: 'cv-example.png'},
+    {name: 'Senior Fullstack Developer', preview: 'cv-example.png'},
     {name: 'Senior Fullstack Developer', preview: 'cv-example.png'},
   ]
 }
