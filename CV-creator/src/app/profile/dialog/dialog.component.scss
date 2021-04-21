@@ -1,0 +1,34 @@
+form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 33vw;
+  height: 30vh;
+  padding: 2rem;
+}
+.save-changes-button{
+  background: lime;
+  color: white;
+  font-weight: 600;
+}
+
+h2{
+  text-align: center;
+}
+
+mat-form-field{
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.new-photo-buttons{
+  width: 100%;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end;
+  button:first-child{
+    margin-right: 1rem;
+  }
+}
+

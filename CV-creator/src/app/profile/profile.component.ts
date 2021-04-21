@@ -1,4 +1,6 @@
 import { Component} from '@angular/core';
+import {MatDialog} from "@angular/material/dialog";
+import {DialogComponent} from "./dialog/dialog.component";
 
 @Component({
   selector: 'app-profile',
@@ -21,4 +23,13 @@ export class ProfileComponent{
     {name: 'Senior Fullstack Developer', preview: 'cv-example.png'},
     {name: 'Senior Fullstack Developer', preview: 'cv-example.png'},
   ]
+
+  constructor(public dialog:MatDialog) {};
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
 }

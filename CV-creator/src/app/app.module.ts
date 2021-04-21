@@ -15,6 +15,7 @@ import { ProfileComponent } from './profile/profile.component'
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
 import {DialogComponent} from "./profile/dialog/dialog.component";
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import {DialogComponent} from "./profile/dialog/dialog.component";
     MatButtonModule,
     MatExpansionModule,
     MatDialogModule,
+    NgxMatFileInputModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
