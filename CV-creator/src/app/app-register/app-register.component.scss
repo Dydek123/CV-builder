@@ -17,6 +17,15 @@ $black: #616263;
   height: 100vh;
   background: $lightgray;
 
+  .container-heading{
+    text-decoration: none;
+    color: $darkgray;
+    transition: all .3s ease-in-out;
+    &:hover{
+      color: $blue;
+      transform: scale(1.03);
+    }
+  }
   mat-card{
     @include flexCenter();
     background: transparent;
