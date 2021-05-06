@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { HttpClientModule} from "@angular/common/http";
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -43,6 +44,7 @@ import {MatRadioModule} from '@angular/material/radio';
     NgxMatFileInputModule,
     TextFieldModule,
     MatRadioModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

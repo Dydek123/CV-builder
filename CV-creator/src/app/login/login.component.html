@@ -3,8 +3,8 @@
   <mat-card>
     <form class="example-form">
       <mat-form-field class="example-full-width">
-        <mat-label>Login</mat-label>
-        <input matInput name="login" [(ngModel)]="login">
+        <mat-label>Email</mat-label>
+        <input matInput name="email" type="email" [(ngModel)]="email">
       </mat-form-field>
 
       <mat-form-field class="example-full-width">
@@ -20,5 +20,6 @@
   <mat-card class="signup">
     <p>Don't have an account? <a href="/register">Join CV-builder now!</a> </p>
   </mat-card>
-  <p class="message-error">{{message}}</p>
+  <p class="message-error" *ngFor="let error of errors">{{error}}</p>
+  <p class="message-success" *ngIf="message==='success'">{{message}}</p>
 </div>
