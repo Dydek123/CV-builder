@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: 'app-login',
@@ -6,12 +7,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent{
-  login:string = '';
+  email:string = '';
   password:string = '';
   message:string = '';
-  constructor() { }
+  errors:string[] = [];
+
+  constructor(private http: HttpClient) {}
+
   onLogin() {
-    if (this.login === 'admin' && this.password==='admin') this.message='Succesfully logged';
-    else this.message='Incorrect data';
+   this.http.post<{ status: string, errors: string[] }>('http://localhost:8080/login',{email: this.email, password: this.password})
+     .subscribe((responese) => {
+       this.message = responese.status;
+       this.errors = responese.errors;
+     })
   }
 }

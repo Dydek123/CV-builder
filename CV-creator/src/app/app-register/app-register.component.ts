@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-register',
@@ -10,9 +11,15 @@ export class AppRegisterComponent{
   password:string = '';
   repeatPassword:string = '';
   message:string = '';
+  errors:string[] = [];
+
+  constructor(private http: HttpClient) {}
 
   onRegister() {
-    if (this.email === 'admin@wp.pl' && this.password===this.repeatPassword) this.message='Success';
-    else this.message='User with this email already exist';
+    this.http.post<{ status: string, errors: string[] }>('http://localhost:8080/register',{email: this.email, password: this.password, repeatPassword: this.repeatPassword})
+      .subscribe((responese) => {
+        this.message = responese.status;
+        this.errors = responese.errors;
+      })
   }
 }

@@ -16,6 +16,12 @@ export class Server {
         this.app.use(logger('dev'));
         this.app.use(express.json());
         this.app.use(express.urlencoded({extended: false}));
+        this.app.use(((req, res, next) => {
+            res.setHeader('Access-Control-Allow-Origin', '*');
+            res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+            res.setHeader('Access-Control-Allow-Methods','GET, POST, PATCH, DELETE, PUT, OPTIONS')
+            next();
+        }))
         this.app.use(cookieParser());
         const indexRouter = new IndexRouter(this.router);
         this.app.use('/', indexRouter.router);
