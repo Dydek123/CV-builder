@@ -13,10 +13,10 @@ export default class SecurityController {
     private passwordMinimalStrength: number = 2.5; // Describe password strength from 0 to 5
     private passwordMinimalLength: number = 6; // Minimal password length
     public async login_user(login_data: loginData): Promise<responseStatus> {
+        console.log(login_data)
         if (!login_data.email || !login_data.password)
             return this.setErrorResponse('Enter email and password');
-        if (!this.passwordIsStrong(login_data.password))
-            return this.setErrorResponse('New password is too weak');
+        console.log(login_data)
         const user = await User.findOne({email: login_data.email, password: login_data.password});
         if (!user) return this.setErrorResponse('User does not exist');
         //TODO Start session

@@ -10,5 +10,4 @@ createConnection().then(async connection => {
     let port = parseInt(process.env.PORT || '');
     if (isNaN(port) || port === 0) port = 8080;
     server.start(port);
-
 }).catch(error => console.log(error));
