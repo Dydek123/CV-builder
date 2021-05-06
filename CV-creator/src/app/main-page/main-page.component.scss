@@ -302,10 +302,18 @@ section {
   }
 }
 
-.templates img{
-  padding-top: 5vh;
+#templates a{
+  position: relative;
+  margin-top: 5vh;
+  background-image: url("../../assets/cv-example.png");
+  background-size: cover;
   width: 50%;
-  z-index: 1;
+  height: 60vh;
+  transition: all .5s ease-in-out;
+  &:hover{
+    transform: translateY(-2vh);
+    height: 62vh;
+  }
 }
 
 @media only screen and (max-width: 768px) {
