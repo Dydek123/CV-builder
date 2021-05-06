@@ -42,71 +42,28 @@
       <img src="./assets/success.svg" alt="success">
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur consequat ultricies pharetra. Donec fermentum eget metus vitae finibus. Nulla imperdiet, tellus ac finibus placerat, neque dolor facilisis nisi, eu euismod metus lorem id neque. Aliquam non sapien at lacus euismod iaculis id consequat ipsum. Cras dapibus nisi vitae pretium iaculis.</p>
     </div>
-
-<!--    <img src="./assets/wave.png" alt="wave left" class="why-us__wave-left">-->
-<!--    <img src="./assets/wave.png" alt="wave left" class="why-us__wave-right">-->
   </div>
 
   <section id="what-clients-stays">
     <h2>What clients says?</h2>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur consequat ultricies pharetra. Donec fermentum eget metus vitae finibus. Nulla imperdiet, tellus ac finibus placerat, neque dolor facilisis nisi, eu euismod metus lorem id neque. Aliquam non sapien at lacus euismod iaculis id consequat ipsum. Cras dapibus nisi vitae pretium iaculis.</p>
-    <div class="opinions">
-      <div>
-        <img src="./assets/face.png" class="opinion-photo" alt="jankowalski-opinion">
-        <div class="wrapper">
-          <mat-card>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur consequat ultricies pharetra. Donec fermentum eget metus vitae finibus. Nulla imperdiet, tellus ac finibus placerat, neque dolor facilisis nisi, eu euismod metus lorem id neque. Aliquam non sapien at lacus euismod iaculis id consequat ipsum. Cras dapibus nisi vitae pretium iaculis.</mat-card>
-        </div>
+    <div class="what-clients-says__opinions">
+      <div class="box">
+
       </div>
-      <div>
-        <img src="./assets/face.png" class="opinion-photo" alt="jankowalski-opinion">
-      </div>
-      <div>
-        <img src="./assets/face.png" class="opinion-photo" alt="jankowalski-opinion">
-      </div>
-      <div>
-        <img src="./assets/face.png" class="opinion-photo" alt="jankowalski-opinion">
-      </div>
-      <div>
-        <img src="./assets/face.png" class="opinion-photo" alt="jankowalski-opinion">
-      </div>
-      <div>
-        <img src="./assets/face.png" class="opinion-photo" alt="jankowalski-opinion">
-      </div>
-      <div>
-        <img src="./assets/face.png" class="opinion-photo" alt="jankowalski-opinion">
-      </div>
-      <div>
-        <img src="./assets/face.png" class="opinion-photo" alt="jankowalski-opinion">
-      </div>
-      <div>
-        <img src="./assets/face.png" class="opinion-photo" alt="jankowalski-opinion">
-      </div>
-      <div>
-        <img src="./assets/face.png" class="opinion-photo" alt="jankowalski-opinion">
-      </div>
-      <div>
-        <img src="./assets/face.png" class="opinion-photo" alt="jankowalski-opinion">
-      </div>
-      <div>
-        <img src="./assets/face.png" class="opinion-photo" alt="jankowalski-opinion">
-      </div>
-      <div>
-        <img src="./assets/face.png" class="opinion-photo" alt="jankowalski-opinion">
-      </div>
-      <div>
-        <img src="./assets/face.png" class="opinion-photo" alt="jankowalski-opinion">
-      </div>
-      <div>
-        <img src="./assets/face.png" class="opinion-photo" alt="jankowalski-opinion">
-      </div>
-      <div>
-        <img src="./assets/face.png" class="opinion-photo" alt="jankowalski-opinion">
-      </div>
-      <div>
-        <img src="./assets/face.png" class="opinion-photo" alt="jankowalski-opinion">
-      </div>
+
+      <article>
+        <h3>{{opinions[button_value].name}}</h3>
+        <p>
+          {{opinions[button_value].text}}
+        </p>
+        <mat-radio-group aria-label="Select an option" [(ngModel)]="button_value">
+          <mat-radio-button value="{{i}}" *ngFor="let opinion of opinions; index as i"></mat-radio-button>
+        </mat-radio-group>
+      </article>
     </div>
   </section>
+
   <section id="templates">
     <h2>TEMPLATES</h2>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur consequat ultricies pharetra. Donec fermentum eget metus vitae finibus. Nulla imperdiet, tellus ac finibus placerat, neque dolor facilisis nisi, eu euismod metus lorem id neque. Aliquam non sapien at lacus euismod iaculis id consequat ipsum. Cras dapibus nisi vitae pretium iaculis.</p>
