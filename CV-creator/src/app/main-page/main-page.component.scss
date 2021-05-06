@@ -273,7 +273,6 @@ section {
     .box{
       width: 15%;
       padding: 0;
-      background-image: url("../../assets/example_photo.jpg");
       background-size: cover;
       @include setBoxShadow(8px);
       img{
