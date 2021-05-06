@@ -18,6 +18,7 @@ import {DialogComponent} from "./profile/dialog/dialog.component";
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import {EditDetailsComponent} from "./profile/edit_details/edit_details.component";
 import {TextFieldModule} from '@angular/cdk/text-field';
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import {TextFieldModule} from '@angular/cdk/text-field';
     MatDialogModule,
     NgxMatFileInputModule,
     TextFieldModule,
+    MatRadioModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

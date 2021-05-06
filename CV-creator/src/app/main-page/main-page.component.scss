@@ -17,6 +17,12 @@ $black: #616263;
   box-shadow: $offset abs($offset) $blue;
 }
 
+@mixin setImage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 * {
   margin: 0;
 }
@@ -237,7 +243,7 @@ h2{
   }
 }
 
-section{
+section {
   width: 84vw;
   height: auto;
   margin: auto;
@@ -257,29 +263,40 @@ section{
     font-size: 1.3rem;
   }
 
-  .opinions{
-    width: 100%;
+  .what-clients-says__opinions{
+    width: 80%;
+    padding: 5vh 0;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
 
-    div{
-      width: 13%;
+    .box{
+      width: 15%;
+      padding: 0;
+      background-image: url("../../assets/example_photo.jpg");
+      background-size: cover;
+      @include setBoxShadow(8px);
       img{
+        width: 100px;
+      }
+    }
+
+    article{
+      width: 60%;
+      min-height: 30vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      h3{
+        font-size: 2rem;
+        font-weight: 400;
+        font-family: 'Josefin Sans', sans-serif;
+      }
+      p{
         width: 100%;
-      }
-      .wrapper{
-        opacity: 0;
-        z-index: -1;
-        position: relative;
-        width: 0;
-        height: 0;
-      }
-      mat-card{
-        position: absolute;
-        width: 200px;
-        bottom: 10%;
+        text-align: left;
+        font-family: 'Lato', sans-serif;
+        padding-bottom: 2vh;
       }
     }
   }
