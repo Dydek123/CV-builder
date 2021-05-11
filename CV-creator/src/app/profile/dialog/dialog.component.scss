@@ -32,3 +32,6 @@ mat-form-field{
   }
 }
 
+input[type='file']{
+  visibility: hidden;
+}

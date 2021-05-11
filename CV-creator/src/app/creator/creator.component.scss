@@ -1,0 +1,32 @@
+*{
+  margin: 0;
+}
+
+main{
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+
+  article{
+    width: 50%;
+    min-height: 100vh;
+    nav{
+      display: flex;
+      justify-content: center;
+      height: 4vh;
+      background: #616263;
+    }
+  }
+
+  section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100vh;
+
+    img{
+      width: 70%;
+    }
+  }
+}

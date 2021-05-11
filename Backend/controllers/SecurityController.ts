@@ -13,10 +13,8 @@ export default class SecurityController {
     private passwordMinimalStrength: number = 2.5; // Describe password strength from 0 to 5
     private passwordMinimalLength: number = 6; // Minimal password length
     public async login_user(login_data: loginData): Promise<responseStatus> {
-        console.log(login_data)
         if (!login_data.email || !login_data.password)
             return this.setErrorResponse('Enter email and password');
-        console.log(login_data)
         const user = await User.findOne({email: login_data.email, password: login_data.password});
         if (!user) return this.setErrorResponse('User does not exist');
         //TODO Start session
@@ -26,10 +24,10 @@ export default class SecurityController {
     public async register_user(register_data: registerData): Promise<responseStatus> {
         if (!register_data.email || !register_data.password || !register_data.repeatPassword)
             return this.setErrorResponse('Enter all data');
-        if (register_data.password !== register_data.repeatPassword)
-            return this.setErrorResponse('Repeat password is not the same');
         if (!this.emailIsValid(register_data.email))
             return this.setErrorResponse('Entered email is not valid');
+        if (register_data.password !== register_data.repeatPassword)
+            return this.setErrorResponse('Repeat password is not the same');
         if (!this.passwordIsStrong(register_data.password))
             return this.setErrorResponse('New password is too weak');
         return await this.createUser(register_data);
@@ -70,8 +68,8 @@ export default class SecurityController {
         return this.setSuccessResponse();
     }
 
-    public async getUser(id: number) {
-        return await Details.findOne(id);
+    public async getUser(id: number):Promise<{ data:detailsI[] }> {
+        return {data: await Details.find({id_user: id})};
     }
 
     public async addNewExperience(experience: experienceI): Promise<responseStatus> {

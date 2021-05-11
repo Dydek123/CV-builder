@@ -20,6 +20,7 @@ import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import {EditDetailsComponent} from "./profile/edit_details/edit_details.component";
 import {TextFieldModule} from '@angular/cdk/text-field';
 import {MatRadioModule} from '@angular/material/radio';
+import { CreatorComponent } from './creator/creator.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import {MatRadioModule} from '@angular/material/radio';
     AppRegisterComponent,
     ProfileComponent,
     DialogComponent,
-    EditDetailsComponent
+    EditDetailsComponent,
+    CreatorComponent
   ],
   imports: [
     BrowserModule,

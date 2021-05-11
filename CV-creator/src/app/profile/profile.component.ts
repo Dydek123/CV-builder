@@ -1,7 +1,9 @@
-import { Component} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {DialogComponent} from "./dialog/dialog.component";
 import {EditDetailsComponent} from "./edit_details/edit_details.component";
+import {HttpClient} from "@angular/common/http";
+import detailsI from "../../../../Backend/interfaces/detailsI";
 
 @Component({
   selector: 'app-profile',
@@ -9,11 +11,7 @@ import {EditDetailsComponent} from "./edit_details/edit_details.component";
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent{
-  details = [
-    {name:'Frontend PK'},
-    {name:'Backend Allegro'},
-    {name:'Senior Fullstack Developer'},
-  ];
+  public details : detailsI[] = [];
 
   projects = [
     {name: 'Frontend', preview: 'cv-example.png'},
@@ -25,7 +23,18 @@ export class ProfileComponent{
     {name: 'Senior Fullstack Developer', preview: 'cv-example.png'},
   ]
 
-  constructor(public dialog:MatDialog) {};
+  userPhoto = 'example_photo.jpg'
+
+  constructor(public dialog:MatDialog, private http: HttpClient) {};
+
+  ngOnInit() {
+    this.http.get<{ data: detailsI[]}>('http://localhost:8080/getUserDetails')
+      .subscribe((response) => {
+        this.details = response.data;
+        console.log(response)
+      })
+  }
+
   openNewPhotoDialog(): void {
     const dialogRef = this.dialog.open(DialogComponent);
 
