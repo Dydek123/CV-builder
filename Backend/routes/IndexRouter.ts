@@ -9,6 +9,7 @@ import experienceI from "../interfaces/experienceI";
 import CvController from "../controllers/CvController";
 import stylesI from "../interfaces/stylesI";
 import templateI from "../interfaces/templateI";
+import authResponse from "../interfaces/authResponse";
 
 export class IndexRouter {
     public router: Router;
@@ -20,8 +21,10 @@ export class IndexRouter {
 
         //User
         this.router.post('/login', async (req: Request, res: Response): Promise<void> => {
+            console.log('body')
             const body: loginData = req.body;
-            const response: responseStatus = await this.securityController.login_user(body);
+            console.log(body)
+            const response: authResponse = await this.securityController.login_user(body);
             res.json(response);
         })
 
@@ -57,7 +60,13 @@ export class IndexRouter {
         })
 
         this.router.get('/getUserDetails', async (req: Request, res: Response): Promise<void> => {
+            const {id} = req.params;
             res.json(await this.securityController.getUser(Number(1))); //TODO id from session
+        })
+
+        this.router.get('/getUserDetails/:id', async (req: Request, res: Response): Promise<void> => {
+            const {id} = req.params;
+            res.json(await this.securityController.getUser(Number(id))); //TODO id from session
         })
 
         //Experience

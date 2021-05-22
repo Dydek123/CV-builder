@@ -8,6 +8,8 @@ main{
   width: 100vw;
 
   article{
+    display: flex;
+    flex-direction: column;
     width: 50%;
     min-height: 100vh;
     nav{
@@ -15,6 +17,12 @@ main{
       justify-content: center;
       height: 4vh;
       background: #616263;
+    }
+    div{
+      display: flex;
+      flex-direction: column;
+      margin: auto;
+      width: 50%;
     }
   }
 

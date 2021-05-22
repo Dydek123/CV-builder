@@ -7,6 +7,36 @@
       <button>4</button>
       <button>5</button>
     </nav>
+    <div>
+      <mat-form-field>
+        <mat-label>Full name</mat-label>
+        <input matInput name="fullName">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Hard Skills</mat-label>
+        <input matInput name="hardSkills">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Soft Skills</mat-label>
+        <input matInput name="softSkills">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput name="email" type="email">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Phone number</mat-label>
+        <input matInput name="phone" type="tel">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Education</mat-label>
+        <textarea matInput
+                  cdkTextareaAutosize
+                  #autosize="cdkTextareaAutosize"
+                  cdkAutosizeMinRows="1"
+                  cdkAutosizeMaxRows="5"></textarea>
+      </mat-form-field>
+    </div>
   </article>
   <section class="section-cv">
     <img src="assets/cv-example.png" alt="Generated CV">

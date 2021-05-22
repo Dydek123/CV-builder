@@ -8,17 +8,19 @@ import updateData from "../interfaces/updateData";
 import detailsI from '../interfaces/detailsI';
 import experienceI from "../interfaces/experienceI";
 import {Experience} from "../entity/Experience";
+import authResponse from "../interfaces/authResponse";
+import {UserI} from "../interfaces/userI";
 
 export default class SecurityController {
     private passwordMinimalStrength: number = 2.5; // Describe password strength from 0 to 5
     private passwordMinimalLength: number = 6; // Minimal password length
-    public async login_user(login_data: loginData): Promise<responseStatus> {
+    public async login_user(login_data: loginData): Promise<authResponse> {
         if (!login_data.email || !login_data.password)
-            return this.setErrorResponse('Enter email and password');
+            return this.setErrorResponseForAuth('Enter email and password', null);
         const user = await User.findOne({email: login_data.email, password: login_data.password});
-        if (!user) return this.setErrorResponse('User does not exist');
+        if (!user) return this.setErrorResponseForAuth('User does not exist', null);
         //TODO Start session
-        return this.setSuccessResponse();
+        return this.setSuccessResponseForAuth(user);
     }
 
     public async register_user(register_data: registerData): Promise<responseStatus> {
@@ -91,8 +93,16 @@ export default class SecurityController {
         return {status: 'error', errors: [error]};
     }
 
+    private setErrorResponseForAuth(error: string, user:UserI): authResponse {
+        return {status: 'error', errors: [error], user:null};
+    }
+
     private setSuccessResponse(): responseStatus {
         return {status: 'success', errors: []}
+    }
+
+    private setSuccessResponseForAuth(user:UserI): authResponse {
+        return {status: 'success', errors: [], user:user}
     }
 
     private emailIsValid(email): boolean {
