@@ -10,7 +10,7 @@ import experienceI from "../interfaces/experienceI";
 import {Experience} from "../entity/Experience";
 import authResponse from "../interfaces/authResponse";
 import {UserI} from "../interfaces/userI";
-import has = Reflect.has;
+
 const bcrypt = require('bcrypt');
 
 export default class SecurityController {
@@ -20,7 +20,7 @@ export default class SecurityController {
         if (!login_data.email || !login_data.password)
             return this.setErrorResponseForAuth('Enter email and password', null);
         const user = await User.findOne({email: login_data.email});
-        if (!user || !await bcrypt.compare(login_data.password, user.password)) return this.setErrorResponseForAuth('User does not exist', null);
+        if (!user || await this.checkPassword(login_data.password, user.password)) return this.setErrorResponseForAuth('User does not exist', null);
         return this.setSuccessResponseForAuth(user);
     }
 
@@ -71,7 +71,7 @@ export default class SecurityController {
         return this.setSuccessResponse();
     }
 
-    public async getUser(id: number):Promise<{ data:detailsI[] }> {
+    public async getUser(id: number): Promise<{ data: detailsI[] }> {
         return {data: await Details.find({id_user: id})};
     }
 
@@ -94,16 +94,16 @@ export default class SecurityController {
         return {status: 'error', errors: [error]};
     }
 
-    private setErrorResponseForAuth(error: string, user:UserI): authResponse {
-        return {status: 'error', errors: [error], user:null};
+    private setErrorResponseForAuth(error: string, user: UserI): authResponse {
+        return {status: 'error', errors: [error], user: null};
     }
 
     private setSuccessResponse(): responseStatus {
         return {status: 'success', errors: []}
     }
 
-    private setSuccessResponseForAuth(user:UserI): authResponse {
-        return {status: 'success', errors: [], user:user}
+    private setSuccessResponseForAuth(user: UserI): authResponse {
+        return {status: 'success', errors: [], user: user}
     }
 
     private emailIsValid(email): boolean {
@@ -112,7 +112,8 @@ export default class SecurityController {
 
     private async createUser(register_data: registerData) {
         const user = new User();
-        user.password = await bcrypt.hash(register_data.password, 10);;
+        user.password = await bcrypt.hash(register_data.password, 10);
+        ;
         user.email = register_data.email;
         try {
             await User.save(user);
@@ -181,5 +182,9 @@ export default class SecurityController {
             console.log(error)
             return this.setErrorResponse('Error while creating new experience');
         }
+    }
+
+    private async checkPassword(enteredPassword:string, databasePassword:string): Promise<boolean> {
+        return !await bcrypt.compare(enteredPassword, databasePassword);
     }
 }
