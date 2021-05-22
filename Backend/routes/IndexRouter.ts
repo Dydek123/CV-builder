@@ -21,9 +21,7 @@ export class IndexRouter {
 
         //User
         this.router.post('/login', async (req: Request, res: Response): Promise<void> => {
-            console.log('body')
             const body: loginData = req.body;
-            console.log(body)
             const response: authResponse = await this.securityController.login_user(body);
             res.json(response);
         })

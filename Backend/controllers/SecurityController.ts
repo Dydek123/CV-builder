@@ -10,6 +10,8 @@ import experienceI from "../interfaces/experienceI";
 import {Experience} from "../entity/Experience";
 import authResponse from "../interfaces/authResponse";
 import {UserI} from "../interfaces/userI";
+import has = Reflect.has;
+const bcrypt = require('bcrypt');
 
 export default class SecurityController {
     private passwordMinimalStrength: number = 2.5; // Describe password strength from 0 to 5
@@ -17,9 +19,8 @@ export default class SecurityController {
     public async login_user(login_data: loginData): Promise<authResponse> {
         if (!login_data.email || !login_data.password)
             return this.setErrorResponseForAuth('Enter email and password', null);
-        const user = await User.findOne({email: login_data.email, password: login_data.password});
-        if (!user) return this.setErrorResponseForAuth('User does not exist', null);
-        //TODO Start session
+        const user = await User.findOne({email: login_data.email});
+        if (!user || !await bcrypt.compare(login_data.password, user.password)) return this.setErrorResponseForAuth('User does not exist', null);
         return this.setSuccessResponseForAuth(user);
     }
 
@@ -111,7 +112,7 @@ export default class SecurityController {
 
     private async createUser(register_data: registerData) {
         const user = new User();
-        user.password = register_data.password;
+        user.password = await bcrypt.hash(register_data.password, 10);;
         user.email = register_data.email;
         try {
             await User.save(user);
