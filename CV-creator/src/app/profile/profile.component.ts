@@ -23,7 +23,7 @@ export class ProfileComponent{
     {name: 'Senior Fullstack Developer', preview: 'cv-example.png'},
   ]
 
-  userPhoto = 'example_photo.jpg'
+  userPhoto = ''
 
   constructor(public dialog:MatDialog, private http: HttpClient) {};
 
@@ -31,7 +31,7 @@ export class ProfileComponent{
     this.http.get<{ data: detailsI[]}>('http://localhost:8080/getUserDetails')
       .subscribe((response) => {
         this.details = response.data;
-        console.log(response)
+        this.userPhoto = response.data[0].image || 'example_photo.jpg';
       })
   }
 
