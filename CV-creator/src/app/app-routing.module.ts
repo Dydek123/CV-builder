@@ -5,13 +5,14 @@ import {LoginComponent} from "./login/login.component";
 import {AppRegisterComponent} from "./app-register/app-register.component";
 import {ProfileComponent} from "./profile/profile.component";
 import {CreatorComponent} from "./creator/creator.component";
+import {AuthGuard} from "./guard/auth.guard";
 
 const routes: Routes = [
   {path: '', component: MainPageComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: AppRegisterComponent},
-  {path: 'profile', component: ProfileComponent},
-  {path: 'createCV', component: CreatorComponent},
+  {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
+  {path: 'createCV', component: CreatorComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({
