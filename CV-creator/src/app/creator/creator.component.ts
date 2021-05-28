@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import detailsI from "../../../../Backend/interfaces/detailsI";
 import {MatDialog} from "@angular/material/dialog";
 import {HttpClient} from "@angular/common/http";
+import responseStatus from "../model/responseStatus";
 
 @Component({
   selector: 'app-creator',
@@ -22,5 +23,13 @@ export class CreatorComponent implements OnInit {
 
   changeValues() :void {
     console.log(this.details.name)
+  }
+
+  saveDetails() :void {
+    this.http.put<detailsI>(`http://localhost:8080/editDetails/${this.details.id_detail}`, this.details)
+      .subscribe((response) => {
+        this.details = response;
+        window.location.reload();
+      })
   }
 }

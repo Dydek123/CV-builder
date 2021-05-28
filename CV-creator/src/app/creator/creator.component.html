@@ -6,7 +6,7 @@
       <button>2</button>
       <button>3</button>
       <button>4</button>
-      <button>5</button>
+      <button (click)="saveDetails()">5</button>
     </nav>
     <form (change)="changeValues()">
       <mat-form-field>
@@ -35,11 +35,11 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Address</mat-label>
-        <input matInput name="address" type="tel" [value]="details.address" [(ngModel)]="details.address">
+        <input matInput name="address" type="text" [value]="details.address" [(ngModel)]="details.address">
       </mat-form-field>
       <mat-form-field>
         <mat-label>Languages</mat-label>
-        <input matInput name="phone" type="tel" [value]="details.language">
+        <input matInput name="phone" type="text" [value]="details.language" [(ngModel)]="details.language">
       </mat-form-field>
       <mat-form-field>
         <mat-label>About me</mat-label>
@@ -49,6 +49,7 @@
                   cdkAutosizeMinRows="1"
                   cdkAutosizeMaxRows="5"
                   [value]="details.about"
+                  [(ngModel)]="details.about"
         ></textarea>
       </mat-form-field>
     </form>
@@ -89,8 +90,8 @@
             </div>
 
             <div *ngIf="details.language">
-              <h3>Languages</h3>
-              <span *ngFor="let language of details.language">
+              <h3>Hard skills</h3>
+              <span class="hard_skills" *ngFor="let language of details.language.split(', ')">
               {{language}}
               </span>
             </div>

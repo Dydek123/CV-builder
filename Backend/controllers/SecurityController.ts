@@ -11,7 +11,6 @@ import {Experience} from "../entity/Experience";
 import authResponse from "../interfaces/authResponse";
 import {UserI} from "../interfaces/userI";
 import signJWT from "../jwt/signJWT";
-import extractJWT from "../jwt/extractJWT";
 
 const bcrypt = require('bcrypt');
 
@@ -28,7 +27,7 @@ export default class SecurityController {
             return this.setErrorResponseForAuth('User does not exist');
         }
         token = await signJWT(user, ((err, token) => {
-            if(err) console.log('Unable to authorize');
+            if (err) console.log('Unable to authorize');
         }))
         return this.setSuccessResponseForAuth(user, token);
     }
@@ -74,9 +73,9 @@ export default class SecurityController {
         return this.createNewDetails(detailsData);
     }
 
-    public async edit_user_details(detailsData: detailsI): Promise<responseStatus> {
+    public async edit_user_details(detailsData: detailsI, id: number): Promise<responseStatus> {
         if (!Object.keys(detailsData).length) return this.setErrorResponse('Set some data');
-        await this.setNewDetails(detailsData);
+        await this.setNewDetails(detailsData, id);
         return this.setSuccessResponse();
     }
 
@@ -108,15 +107,15 @@ export default class SecurityController {
     }
 
     private setErrorResponseForAuth(error: string): authResponse {
-        return {status: 'error', errors: [error], email:null, token:null};
+        return {status: 'error', errors: [error], email: null, token: null};
     }
 
     private setSuccessResponse(): responseStatus {
         return {status: 'success', errors: []}
     }
 
-    private setSuccessResponseForAuth(user: UserI, token: string|undefined): authResponse {
-        return {status: 'success', errors: [], email: user.email, token:token}
+    private setSuccessResponseForAuth(user: UserI, token: string | undefined): authResponse {
+        return {status: 'success', errors: [], email: user.email, token: token}
     }
 
     private emailIsValid(email): boolean {
@@ -140,13 +139,12 @@ export default class SecurityController {
         return !(strength(password) < this.passwordMinimalStrength || password.length < this.passwordMinimalLength);
     }
 
-    private async setNewDetails(detailsData: detailsI): Promise<void> {
-        const details = await Details.findOne(1); // TODO change to id from choose
+    private async setNewDetails(detailsData: detailsI, id: number): Promise<void> {
+        const details = await Details.findOne({id_detail:id});
         const items = ['hard_skills', 'soft_skills', 'name', 'surname', 'email', 'phone_number', 'address', 'about', 'image', 'agreement', 'language'];
         for (const item of items) {
             details[item] = detailsData[item] || null;
         }
-        details.id_user = 1 // TODO id from session
         await Details.save(details);
     }
 
@@ -196,7 +194,7 @@ export default class SecurityController {
         }
     }
 
-    private async checkPassword(enteredPassword:string, databasePassword:string): Promise<boolean> {
+    private async checkPassword(enteredPassword: string, databasePassword: string): Promise<boolean> {
         return !await bcrypt.compare(enteredPassword, databasePassword);
     }
 }

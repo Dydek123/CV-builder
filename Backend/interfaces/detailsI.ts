@@ -1,5 +1,5 @@
 export default interface loginData {
-    id_details?: number,
+    id_detail?: number,
     id_user?: number,
     hard_skills?: string,
     soft_skills?: string,
@@ -11,5 +11,5 @@ export default interface loginData {
     about?: string,
     image?: string,
     agreement?: boolean,
-    language?: string[]
+    language?: string
 }

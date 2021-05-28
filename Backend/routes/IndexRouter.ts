@@ -10,7 +10,6 @@ import CvController from "../controllers/CvController";
 import stylesI from "../interfaces/stylesI";
 import templateI from "../interfaces/templateI";
 import authResponse from "../interfaces/authResponse";
-import extractJWT from "../jwt/extractJWT";
 
 export class IndexRouter {
     public router: Router;
@@ -52,13 +51,14 @@ export class IndexRouter {
             res.json(response);
         })
 
-        this.router.put('/editDetails', async (req: Request, res: Response): Promise<void> => {
+        this.router.put('/editDetails/:id', async (req: Request, res: Response): Promise<void> => {
             const body: detailsI = req.body;
-            const response: responseStatus = await this.securityController.edit_user_details(body);
+            const {id} = req.params;
+            const response: responseStatus = await this.securityController.edit_user_details(body, Number(id));
             res.json(response);
         })
 
-        this.router.get('/getUserDetails', async (req: Request, res: Response, next:NextFunction): Promise<void> => {
+        this.router.get('/getUserDetails', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
             res.json(await this.securityController.getUser(Number(1))); //TODO id from session
         })
 
@@ -102,7 +102,7 @@ export class IndexRouter {
         })
 
         this.router.get('/getTemplate/:id', async (req: Request, res: Response): Promise<void> => {
-            const id:number = +req.params.id;
+            const id: number = +req.params.id;
             res.json(await this.cvController.getTemplate(id));
         })
 
