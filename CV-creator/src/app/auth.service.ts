@@ -18,6 +18,9 @@ export class AuthService {
   register(model: User): Observable<User>{
     return this.saveUser(model, this.baseUrl+'register');
   }
+  logout() {
+    localStorage.removeItem('user');
+  }
   private saveUser(model: User, url: string): Observable<authResponse>{
     return this.httpClient.post<authResponse>(url, model).pipe(
       map((response: authResponse) =>  {

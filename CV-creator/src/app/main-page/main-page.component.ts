@@ -1,4 +1,7 @@
 import {Component} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {AuthService} from "../auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-main-page',
@@ -6,6 +9,7 @@ import {Component} from '@angular/core';
   styleUrls: ['./main-page.component.scss']
 })
 export class MainPageComponent {
+  is_logged:boolean = !!localStorage.getItem('user');
   button_value = 0;
   opinions = [
     {
@@ -20,4 +24,11 @@ export class MainPageComponent {
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur consequat ultricies pharetra. Donec fermentum eget metus vitae finibus. Nulla imperdiet, tellus ac finibus placerat, neque dolor facilisis nisi, eu euismod metus lorem id neque. Aliquam non sapien at lacus euismod iaculis id consequat ipsum. Cras dapibus nisi vitae pretium iaculis.'
     },
   ]
+
+  constructor(private authService: AuthService) {}
+
+  logout(){
+    this.authService.logout();
+    this.is_logged = false;
+  }
 }

@@ -8,8 +8,9 @@
         <a href="#why-our-creator">Why our creator</a>
         <a href="#what-clients-stays">What clients says</a>
         <a href="#templates">Templates</a>
-        <a href="/login">Login</a>
-        <a href="/profile">Profile</a>
+        <a routerLink="login" *ngIf="!is_logged">Login</a>
+        <a routerLink="profile" *ngIf="is_logged">Profile</a>
+        <a routerLink="" *ngIf="is_logged" (click)="logout()">Logout</a>
       </nav>
     </div>
 
