@@ -10,6 +10,7 @@ import CvController from "../controllers/CvController";
 import stylesI from "../interfaces/stylesI";
 import templateI from "../interfaces/templateI";
 import authResponse from "../interfaces/authResponse";
+import extractJWT from "../jwt/extractJWT";
 
 export class IndexRouter {
     public router: Router;
@@ -20,6 +21,11 @@ export class IndexRouter {
         this.router = router;
 
         //User
+        this.router.get('/validateToken', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+            const token = extractJWT(req,res,next)
+            res.json(this.securityController.validateToken(token));
+        })
+
         this.router.post('/login', async (req: Request, res: Response): Promise<void> => {
             const body: loginData = req.body;
             const response: authResponse = await this.securityController.login_user(body);
@@ -68,14 +74,15 @@ export class IndexRouter {
         })
 
         //Experience
-        this.router.get('/getExperience', async (req: Request, res: Response): Promise<void> => {
-            const {id} = req.query
-            res.json(await this.securityController.getExperience(Number(id))); //TODO id from session
+        this.router.get('/getExperience/:id', async (req: Request, res: Response): Promise<void> => {
+            const {id} = req.params
+            res.json(await this.securityController.getExperience(Number(id)));
         })
 
-        this.router.post('/addExperience', async (req: Request, res: Response): Promise<void> => {
+        this.router.post('/addExperience/:id', async (req: Request, res: Response): Promise<void> => {
             const body: experienceI = req.body;
-            const response: responseStatus = await this.securityController.addNewExperience(body);
+            const {id} = req.params;
+            const response: responseStatus = await this.securityController.addNewExperience(body, Number(id));
             res.json(response);
         })
 

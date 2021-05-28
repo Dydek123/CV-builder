@@ -18,6 +18,10 @@ export default class SecurityController {
     private passwordMinimalStrength: number = 2.5; // Describe password strength from 0 to 5
     private passwordMinimalLength: number = 6; // Minimal password length
 
+    public validateToken(token):{status:boolean} {
+        return {status:token.exp>Math.floor(new Date().getTime()/1000)};
+    }
+
     public async login_user(login_data: loginData): Promise<authResponse> {
         let token: string | undefined;
         if (!login_data.email || !login_data.password)
@@ -87,9 +91,9 @@ export default class SecurityController {
         return await Details.findOne({id_detail: id});
     }
 
-    public async addNewExperience(experience: experienceI): Promise<responseStatus> {
+    public async addNewExperience(experience: experienceI, id:number): Promise<responseStatus> {
         if (!Object.keys(experience).length) return this.setErrorResponse('Set some data');
-        return this.createNewExperience(experience, 1); //TODO set id_details
+        return this.createNewExperience(experience, id);
     }
 
     public async editExperience(experience: experienceI): Promise<responseStatus> {
