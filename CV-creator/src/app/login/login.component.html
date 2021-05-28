@@ -12,6 +12,7 @@
         <input matInput name="password" type="password" [(ngModel)]="password">
       </mat-form-field>
       <button mat-flat-button color="primary" (click)="onLogin()">Login</button>
+      <mat-error *ngIf="status==='error'">Invalid data</mat-error>
       <div class="forget-password-label">
         <a href="#" class="forget-password-label">Forgot your password?</a>
       </div>
@@ -20,6 +21,4 @@
   <mat-card class="signup">
     <p>Don't have an account? <a href="/register">Join CV-builder now!</a> </p>
   </mat-card>
-  <p class="message-error" *ngFor="let error of errors">{{error}}</p>
-  <p class="message-success" *ngIf="message==='success'">{{message}}</p>
 </div>

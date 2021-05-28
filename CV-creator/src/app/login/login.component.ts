@@ -1,36 +1,37 @@
-import { Component } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import {Component} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
 import {AuthService} from "../auth.service";
-import { User } from '../model/User';
+import {User} from '../model/User';
+import {Router} from "@angular/router";
+import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {ErrorStateMatcher} from '@angular/material/core';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent{
-  email:string = '';
-  password:string = '';
-  message:string = '';
-  errors:string[] = [];
+export class LoginComponent {
+  email: string = '';
+  password: string = '';
+  status:string|undefined;
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(private http: HttpClient, private authService: AuthService, private router: Router) {
+  }
 
-  onLogin() {
-    const user:User = {email:this.email, password:this.password}
+  emailFormControl = new FormControl('', [
+    Validators.required,
+    Validators.email
+  ]);
+
+  onLogin(): void {
+    this.status = '';
+    const user: User = {email: this.email, password: this.password}
     this.authService.login(user)
       .subscribe(data => {
-        console.log(data)
+        if (data.status === 'success') this.router.navigate([''])
+        this.status = data.status;
+        console.log(this.status)
       });
   }
-  //  this.http.post<{ status: string, errors: string[] }>('http://localhost:8080/login',{email: this.email, password: this.password})
-  //    .subscribe((responese) => {
-  //      this.message = responese.status;
-  //      this.errors = responese.errors;
-  //      this.authService.saveUser(this.user, 'http://localhost:8080/login')
-  //        .subscribe(data => {
-  //          console.log('Successful');
-  //        });
-  //    })
-  // }
 }

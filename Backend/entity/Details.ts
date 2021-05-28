@@ -42,5 +42,5 @@ export class Details extends BaseEntity {
     agreement: boolean;
 
     @Column("text", {array: true})
-    language: string[];
+    language: string;
 }

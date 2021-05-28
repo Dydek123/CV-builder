@@ -79,8 +79,8 @@ export default class SecurityController {
         return this.setSuccessResponse();
     }
 
-    public async getUser(id: number): Promise<{ data: detailsI[] }> {
-        return {data: await Details.find({id_user: id})};
+    public async getUser(id: number): Promise<detailsI[]> {
+        return await Details.find({id_user: id});
     }
 
     public async getUserDetail(id: number): Promise<detailsI> {

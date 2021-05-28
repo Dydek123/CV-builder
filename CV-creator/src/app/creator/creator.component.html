@@ -48,6 +48,7 @@
                   #autosize="cdkTextareaAutosize"
                   cdkAutosizeMinRows="1"
                   cdkAutosizeMaxRows="5"
+                  name="about"
                   [value]="details.about"
                   [(ngModel)]="details.about"
         ></textarea>
@@ -90,8 +91,8 @@
             </div>
 
             <div *ngIf="details.language">
-              <h3>Hard skills</h3>
-              <span class="hard_skills" *ngFor="let language of details.language.split(', ')">
+              <h3>Languages</h3>
+              <span class="languages" *ngFor="let language of details.language.split(', ')">
               {{language}}
               </span>
             </div>

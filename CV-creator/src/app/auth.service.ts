@@ -12,7 +12,7 @@ export class AuthService {
   private baseUrl = 'http://localhost:8080/'
   constructor(private httpClient: HttpClient) {
   }
-  login(model: User): Observable<User>{
+  login(model: User): Observable<authResponse>{
     return this.saveUser(model, this.baseUrl+'login');
   }
   register(model: User): Observable<User>{

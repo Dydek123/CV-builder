@@ -22,7 +22,7 @@ export class CreatorComponent implements OnInit {
   }
 
   changeValues() :void {
-    console.log(this.details.name)
+    console.log(this.details.about)
   }
 
   saveDetails() :void {
