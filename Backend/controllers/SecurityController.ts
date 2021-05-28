@@ -167,7 +167,7 @@ export default class SecurityController {
 
     private async createNewExperience(experience: experienceI, id_details: number): Promise<responseStatus> {
         const newExperience = new Experience();
-        const items = ['place', 'start_date', 'end_date', 'description'];
+        const items = ['place', 'start_date', 'end_date', 'description', 'role'];
         for (const item of items) {
             newExperience[item] = experience[item] || null;
         }
@@ -184,7 +184,7 @@ export default class SecurityController {
 
     private async setNewExperience(experience: experienceI): Promise<responseStatus> {
         const newExperience = await Experience.findOne(experience.id_experience);
-        const items = ['place', 'start_date', 'end_date', 'description'];
+        const items = ['place', 'start_date', 'end_date', 'description', 'role'];
         for (const item of items) {
             newExperience[item] = experience[item] || null;
         }

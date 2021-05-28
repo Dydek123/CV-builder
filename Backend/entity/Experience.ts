@@ -13,6 +13,9 @@ export class Experience extends BaseEntity {
     place: string;
 
     @Column()
+    role: string;
+
+    @Column()
     start_date: Date;
 
     @Column()
