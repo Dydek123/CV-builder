@@ -43,7 +43,8 @@ export class ProfileComponent{
     });
   }
 
-  openEditDetailsDialog(): void {
+  openEditDetailsDialog($event: any): void {
+    console.log($event)
     const dialogRef = this.dialog.open(EditDetailsComponent);
 
     dialogRef.afterClosed().subscribe(result => {

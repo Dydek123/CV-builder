@@ -1,4 +1,4 @@
-import {Request, Response, Router} from "express";
+import {NextFunction, Request, Response, Router} from "express";
 import SecurityController from "../controllers/SecurityController";
 import loginData from "../interfaces/loginData";
 import responseStatus from "../interfaces/responseStatus";
@@ -10,6 +10,7 @@ import CvController from "../controllers/CvController";
 import stylesI from "../interfaces/stylesI";
 import templateI from "../interfaces/templateI";
 import authResponse from "../interfaces/authResponse";
+import extractJWT from "../jwt/extractJWT";
 
 export class IndexRouter {
     public router: Router;
@@ -57,14 +58,13 @@ export class IndexRouter {
             res.json(response);
         })
 
-        this.router.get('/getUserDetails', async (req: Request, res: Response): Promise<void> => {
-            const {id} = req.params;
+        this.router.get('/getUserDetails', async (req: Request, res: Response, next:NextFunction): Promise<void> => {
             res.json(await this.securityController.getUser(Number(1))); //TODO id from session
         })
 
         this.router.get('/getUserDetails/:id', async (req: Request, res: Response): Promise<void> => {
             const {id} = req.params;
-            res.json(await this.securityController.getUser(Number(id))); //TODO id from session
+            res.json(await this.securityController.getUserDetail(Number(id)));
         })
 
         //Experience

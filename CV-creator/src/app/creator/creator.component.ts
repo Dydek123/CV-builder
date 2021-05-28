@@ -9,15 +9,18 @@ import {HttpClient} from "@angular/common/http";
   styleUrls: ['./creator.component.scss']
 })
 export class CreatorComponent implements OnInit {
-  details:detailsI = {};
+  public details:detailsI = {};
   constructor(private http: HttpClient) {};
 
   ngOnInit(): void {
-    this.http.get<{ data: detailsI[]}>('http://localhost:8080/getUserDetails/1')
+    this.http.get<detailsI>('http://localhost:8080/getUserDetails/4')
       .subscribe((response) => {
+        this.details = response;
         console.log(response)
-        // this.details = response.data;
       })
   }
 
+  changeValues() :void {
+    console.log(this.details.name)
+  }
 }

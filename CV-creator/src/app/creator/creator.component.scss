@@ -18,7 +18,7 @@ main{
       height: 4vh;
       background: #616263;
     }
-    div{
+    form{
       display: flex;
       flex-direction: column;
       margin: auto;
@@ -33,8 +33,56 @@ main{
     width: 50%;
     height: 100vh;
 
-    img{
+    div{
       width: 70%;
+      height: 90%;
+      display: flex;
+      flex-direction: row;
+
+      div{
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        font-family: 'Lato', sans-serif;
+
+        h3{
+          font-size: 1.2rem;
+          font-weight: 600;
+          padding: .7rem 0;
+        }
+      }
+
+      .template1__container {
+        width: 100%;
+        margin: 4rem 0;
+        text-align: left;
+      }
+
+      .template1-left{
+        width: 30%;
+        background: #93d7f9;
+        .template1-about{
+          width: calc(100% - 2rem);
+          padding: 0 1rem;
+
+          div{
+            height: auto;
+            padding: .2rem 0;
+          }
+
+          span{
+            padding: .1rem 0;
+          }
+        }
+      }
+
+      .template1-right{
+        background: white;
+
+        h2{
+          text-align: center;
+        }
+      }
     }
   }
 }

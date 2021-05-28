@@ -10,18 +10,27 @@ import experienceI from "../interfaces/experienceI";
 import {Experience} from "../entity/Experience";
 import authResponse from "../interfaces/authResponse";
 import {UserI} from "../interfaces/userI";
+import signJWT from "../jwt/signJWT";
+import extractJWT from "../jwt/extractJWT";
 
 const bcrypt = require('bcrypt');
 
 export default class SecurityController {
     private passwordMinimalStrength: number = 2.5; // Describe password strength from 0 to 5
     private passwordMinimalLength: number = 6; // Minimal password length
+
     public async login_user(login_data: loginData): Promise<authResponse> {
+        let token: string | undefined;
         if (!login_data.email || !login_data.password)
-            return this.setErrorResponseForAuth('Enter email and password', null);
+            return this.setErrorResponseForAuth('Enter email and password');
         const user = await User.findOne({email: login_data.email});
-        if (!user || await this.checkPassword(login_data.password, user.password)) return this.setErrorResponseForAuth('User does not exist', null);
-        return this.setSuccessResponseForAuth(user);
+        if (!user || await this.checkPassword(login_data.password, user.password)) {
+            return this.setErrorResponseForAuth('User does not exist');
+        }
+        token = await signJWT(user, ((err, token) => {
+            if(err) console.log('Unable to authorize');
+        }))
+        return this.setSuccessResponseForAuth(user, token);
     }
 
     public async register_user(register_data: registerData): Promise<responseStatus> {
@@ -75,6 +84,10 @@ export default class SecurityController {
         return {data: await Details.find({id_user: id})};
     }
 
+    public async getUserDetail(id: number): Promise<detailsI> {
+        return await Details.findOne({id_detail: id});
+    }
+
     public async addNewExperience(experience: experienceI): Promise<responseStatus> {
         if (!Object.keys(experience).length) return this.setErrorResponse('Set some data');
         return this.createNewExperience(experience, 1); //TODO set id_details
@@ -94,16 +107,16 @@ export default class SecurityController {
         return {status: 'error', errors: [error]};
     }
 
-    private setErrorResponseForAuth(error: string, user: UserI): authResponse {
-        return {status: 'error', errors: [error], user: null};
+    private setErrorResponseForAuth(error: string): authResponse {
+        return {status: 'error', errors: [error], email:null, token:null};
     }
 
     private setSuccessResponse(): responseStatus {
         return {status: 'success', errors: []}
     }
 
-    private setSuccessResponseForAuth(user: UserI): authResponse {
-        return {status: 'success', errors: [], user: user}
+    private setSuccessResponseForAuth(user: UserI, token: string|undefined): authResponse {
+        return {status: 'success', errors: [], email: user.email, token:token}
     }
 
     private emailIsValid(email): boolean {
@@ -113,7 +126,7 @@ export default class SecurityController {
     private async createUser(register_data: registerData) {
         const user = new User();
         user.password = await bcrypt.hash(register_data.password, 10);
-        ;
+
         user.email = register_data.email;
         try {
             await User.save(user);
@@ -124,7 +137,6 @@ export default class SecurityController {
     }
 
     private passwordIsStrong(password: string): boolean {
-        //TODO change strength condition
         return !(strength(password) < this.passwordMinimalStrength || password.length < this.passwordMinimalLength);
     }
 

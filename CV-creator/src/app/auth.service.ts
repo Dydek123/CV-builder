@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {User} from "./model/User"
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
-import authResponse from "../../../Backend/interfaces/authResponse";
+import {authResponse} from "./model/authResponse";
 
 @Injectable({
   providedIn: 'root'
@@ -16,15 +16,18 @@ export class AuthService {
     return this.saveUser(model, this.baseUrl+'login');
   }
   register(model: User): Observable<User>{
-    return this.saveUser(model, 'register');
+    return this.saveUser(model, this.baseUrl+'register');
   }
-  private saveUser(model: User, url: string): Observable<User>{
+  private saveUser(model: User, url: string): Observable<authResponse>{
     return this.httpClient.post<authResponse>(url, model).pipe(
       map((response: authResponse) =>  {
+        let auth:authResponse;
         if (response.status === 'success'){
-          localStorage.setItem('user', JSON.stringify(response.user));
+          auth = {status: response.status, email: response.email, token: response.token};
+          localStorage.setItem('user', JSON.stringify(auth));
+          return auth;
         }
-        return response.user;
+        return {status: response.status};
       })
     );
   }

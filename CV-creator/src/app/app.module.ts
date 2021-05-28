@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { HttpClientModule} from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -21,6 +21,7 @@ import {EditDetailsComponent} from "./profile/edit_details/edit_details.componen
 import {TextFieldModule} from '@angular/cdk/text-field';
 import {MatRadioModule} from '@angular/material/radio';
 import { CreatorComponent } from './creator/creator.component';
+import {AuthInterceptor} from "./interceptors/auth.interceptor";
 
 @NgModule({
   declarations: [
@@ -48,7 +49,9 @@ import { CreatorComponent } from './creator/creator.component';
     MatRadioModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
