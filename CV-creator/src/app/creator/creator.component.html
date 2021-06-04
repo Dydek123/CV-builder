@@ -1,15 +1,15 @@
 <main>
   <article>
     <nav>
-      <a href="#">Main page</a>
-      <button>1</button>
-      <button>2</button>
-      <button>3</button>
-      <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+      <button mat-button routerLink="/git ">Main page</button>
+      <button mat-button>1</button>
+      <button mat-button>2</button>
+      <button mat-button>3</button>
+      <button mat-button [matMenuTriggerFor]="menu">CV's</button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item *ngFor="let detail of userDetailsList" value="{{detail.id_detail}}" (click)="changeCV($event)">{{detail.name}}</button>
       </mat-menu>
-      <button (click)="saveDetails()">5</button>
+      <button mat-button (click)="saveDetails()">Save</button>
     </nav>
     <form (change)="changeValues()">
       <mat-form-field>
@@ -63,18 +63,18 @@
       <div class="template1-left">
         <div class="template1__container">
           <div class="template1-about">
-            <h3>About</h3>
+            <h3 *ngIf="details.about">About</h3>
             {{details.about}}
             <h3>Contact</h3>
-            <div>
+            <div *ngIf="details.address">
               <h4>Address</h4>
               <span>{{details.address}}</span>
             </div>
-            <div>
+            <div *ngIf="details.email">
               <h4>Email</h4>
               <span>{{details.email}}</span>
             </div>
-            <div>
+            <div *ngIf="details.phone_number">
               <h4>Phone number</h4>
               <span>{{details.phone_number}}</span>
             </div>

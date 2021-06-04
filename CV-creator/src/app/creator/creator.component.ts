@@ -21,6 +21,7 @@ export class CreatorComponent implements OnInit {
     const routeParams = this.route.snapshot.paramMap;
     this.detailsIdFromRoute = Number(routeParams.get('id')) | 0;
     await this.getDataFromApi(this.detailsIdFromRoute);
+    console.log(this.details.experience)
   }
 
   changeValues(): void {
