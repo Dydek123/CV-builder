@@ -14,6 +14,7 @@ export class CreatorComponent implements OnInit {
   public details: UserDetailsI = {};
   public userDetailsList: UserDetailsI[] = [];
   private detailsIdFromRoute:number = 0;
+  public loading:boolean = false;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {};
 
@@ -21,7 +22,6 @@ export class CreatorComponent implements OnInit {
     const routeParams = this.route.snapshot.paramMap;
     this.detailsIdFromRoute = Number(routeParams.get('id')) | 0;
     await this.getDataFromApi(this.detailsIdFromRoute);
-    console.log(this.details.experience)
   }
 
   changeValues(): void {
@@ -46,6 +46,7 @@ export class CreatorComponent implements OnInit {
   }
 
   private async getDataFromApi(id:number) {
+    this.loading = true;
     if (this.detailsIdFromRoute !== 0) {
       await this.http.get<UserDetailsI>('http://localhost:8080/getUserDetails/' + id)
         .subscribe((response) => {
@@ -61,6 +62,7 @@ export class CreatorComponent implements OnInit {
     await this.http.get<userDetailsI[]>('http://localhost:8080/getUserDetails')
       .subscribe((response) => {
         this.userDetailsList = response;
+        this.loading = false;
       })
   }
 

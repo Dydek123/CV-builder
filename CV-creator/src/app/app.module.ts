@@ -23,6 +23,7 @@ import {TextFieldModule} from '@angular/cdk/text-field';
 import {MatRadioModule} from '@angular/material/radio';
 import {CreatorComponent} from './creator/creator.component';
 import {AuthInterceptor} from "./interceptors/auth.interceptor";
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import {AuthInterceptor} from "./interceptors/auth.interceptor";
     MatRadioModule,
     HttpClientModule,
     MatMenuModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
