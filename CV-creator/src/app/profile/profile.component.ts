@@ -28,10 +28,10 @@ export class ProfileComponent{
   constructor(public dialog:MatDialog, private http: HttpClient) {};
 
   ngOnInit() {
-    this.http.get<{ data: detailsI[]}>('http://localhost:8080/getUserDetails')
+    this.http.get<detailsI[]>('http://localhost:8080/getUserDetails')
       .subscribe((response) => {
-        this.details = response.data;
-        this.userPhoto = response.data[0].image || 'example_photo.jpg';
+        this.details = response;
+        this.userPhoto = response[0].image || 'example_photo.jpg';
       })
   }
 
