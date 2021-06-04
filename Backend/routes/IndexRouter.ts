@@ -66,7 +66,8 @@ export class IndexRouter {
         })
 
         this.router.get('/getUserDetails', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-            res.json(await this.securityController.getUser(Number(1))); //TODO id from session
+            const token = extractJWT(req,res,next);
+            res.json(await this.securityController.getListOfUserDetails(token.email));
         })
 
         this.router.get('/getUserDetails/:id', async (req: Request, res: Response): Promise<void> => {

@@ -97,6 +97,11 @@ export default class SecurityController {
         return await Details.findOne({id_detail: id});
     }
 
+    public async getListOfUserDetails(userEmail:string): Promise<detailsI[]> {
+        const user = await this.getUserByEmail(userEmail);
+        return await Details.find({id_user:user.id_user});
+    }
+
     public async addNewExperience(experience: experienceI, id:number): Promise<responseStatus> {
         if (!Object.keys(experience).length) return this.setErrorResponse('Set some data');
         return this.createNewExperience(experience, id);

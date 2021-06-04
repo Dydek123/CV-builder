@@ -5,7 +5,10 @@
       <button>1</button>
       <button>2</button>
       <button>3</button>
-      <button>4</button>
+      <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item *ngFor="let detail of userDetailsList" value="{{detail.id_detail}}" (click)="changeCV($event)">{{detail.name}}</button>
+      </mat-menu>
       <button (click)="saveDetails()">5</button>
     </nav>
     <form (change)="changeValues()">
