@@ -1,3 +1,5 @@
+$cv_color: #93d7f9;
+
 *{
   margin: 0;
 }
@@ -60,7 +62,7 @@ main{
 
       .template1-left{
         width: 30%;
-        background: #93d7f9;
+        background: $cv_color;
         .template1-about{
           width: calc(100% - 2rem);
           padding: 0 1rem;
@@ -81,6 +83,31 @@ main{
 
         h2{
           text-align: center;
+        }
+
+        .experience{
+          width: calc(100% - 4rem);
+          padding: .5rem 2rem;
+          height: auto;
+        }
+        .experience-details{
+          width: 100%;
+          padding: 1rem 0;
+        }
+        .experience-place{
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          padding: .4rem 0;
+        }
+        .experience-role{
+          color: $cv_color;
+        }
+
+        .agreement{
+          font-size: .7rem;
+          width: calc(100% - 4rem);
+          padding: .5rem 2rem;
         }
       }
     }

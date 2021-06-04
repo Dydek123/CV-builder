@@ -13,6 +13,8 @@ const routes: Routes = [
   {path: 'register', component: AppRegisterComponent},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
   {path: 'createCV', component: CreatorComponent, canActivate: [AuthGuard]},
+  {path: 'createCV/:id', component: CreatorComponent, canActivate: [AuthGuard]},
+  {path: '**', component: MainPageComponent}
 ];
 
 @NgModule({

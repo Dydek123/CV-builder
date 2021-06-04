@@ -72,8 +72,10 @@ export default class SecurityController {
         return this.setSuccessResponse();
     }
 
-    public async add_user_details(detailsData: detailsI): Promise<responseStatus> {
+    public async add_user_details(detailsData: detailsI, userEmail:string): Promise<responseStatus> {
         if (!Object.keys(detailsData).length) return this.setErrorResponse('Set some data');
+        const user = await this.getUserByEmail(userEmail);
+        detailsData.id_user = user.id_user;
         return this.createNewDetails(detailsData);
     }
 
@@ -85,6 +87,10 @@ export default class SecurityController {
 
     public async getUser(id: number): Promise<detailsI[]> {
         return await Details.find({id_user: id});
+    }
+
+    public async getUserByEmail(email: string): Promise<UserI> {
+        return await User.findOne({email: email});
     }
 
     public async getUserDetail(id: number): Promise<detailsI> {
@@ -154,12 +160,10 @@ export default class SecurityController {
 
     private async createNewDetails(detailsData: detailsI): Promise<responseStatus> {
         const details = new Details();
-        const items = ['hard_skills', 'soft_skills', 'name', 'surname', 'email', 'phone_number', 'address', 'about', 'image', 'agreement', 'language'];
-        //TODO check if user is logged
+        const items = ['hard_skills', 'soft_skills', 'name', 'surname', 'email', 'phone_number', 'address', 'about', 'image', 'agreement', 'language', 'id_user'];
         for (const item of items) {
             details[item] = detailsData[item] || null;
         }
-        details.id_user = 1; //TODO id from session
         await Details.save(details)
 
         return this.setSuccessResponse();

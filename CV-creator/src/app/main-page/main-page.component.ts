@@ -29,6 +29,6 @@ export class MainPageComponent {
 
   logout(){
     this.authService.logout();
-    // this.is_logged = false;
+    this.is_logged = false;
   }
 }

@@ -1,4 +1,5 @@
 export interface UserI{
-    email?: string;
-    password?: string;
+    id_user?:number,
+    email?: string,
+    password?: string
 }

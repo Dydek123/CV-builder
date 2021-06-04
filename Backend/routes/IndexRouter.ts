@@ -51,9 +51,10 @@ export class IndexRouter {
         })
 
         //Details
-        this.router.post('/addDetails', async (req: Request, res: Response): Promise<void> => {
+        this.router.post('/addDetails', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
             const body: detailsI = req.body;
-            const response: responseStatus = await this.securityController.add_user_details(body);
+            const token = extractJWT(req,res,next);
+            const response: responseStatus = await this.securityController.add_user_details(body, token.email);
             res.json(response);
         })
 
