@@ -42,15 +42,16 @@ main{
     }
   }
 
+
+  mat-form-field{
+    width: 100%;
+  }
+
   .cv_experience{
     width: 100%;
 
     mat-divider{
       padding: 1rem 0;
-    }
-
-    mat-form-field{
-      width: 100%;
     }
 
     .experience_buttons{

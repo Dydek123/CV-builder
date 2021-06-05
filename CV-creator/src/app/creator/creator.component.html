@@ -94,6 +94,42 @@
           <button mat-button color="warn" value="{{experience.id_experience}}" (click)="deleteExperience($event)">Remove</button>
         </div>
       </div>
+
+      <div class="cv_experience">
+        <mat-divider></mat-divider>
+        <mat-form-field>
+          <mat-label>Role</mat-label>
+          <input matInput name="exprerience_role{{newExperience.id_experience}}" type="text" [value]="newExperience.role" [(ngModel)]="newExperience.role">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Place</mat-label>
+          <input matInput name="exprerience_place{{newExperience.id_experience}}" type="text" [value]="newExperience.place" [(ngModel)]="newExperience.place">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Start date</mat-label>
+          <input matInput name="start_date{{newExperience.id_experience}}" type="date" [value]="newExperience.start_date" [(ngModel)]="newExperience.start_date">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>End date</mat-label>
+          <input matInput name="end_date{{newExperience.id_experience}}" type="date" [value]="newExperience.end_date" [(ngModel)]="newExperience.end_date">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Job description</mat-label>
+          <textarea matInput
+                    cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize"
+                    cdkAutosizeMinRows="1"
+                    cdkAutosizeMaxRows="5"
+                    name="job_descritpion{{newExperience.id_experience}}"
+                    [value]="newExperience.description"
+                    [(ngModel)]="newExperience.description"
+          ></textarea>
+        </mat-form-field>
+
+        <div class="experience_buttons">
+          <button mat-button (click)="createExperience()">Create</button>
+        </div>
+      </div>
     </form>
   </article>
   <section class="section-cv">

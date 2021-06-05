@@ -17,6 +17,7 @@ export class CreatorComponent implements OnInit {
   public details: UserDetailsI = {};
   public userDetailsList: UserDetailsI[] = [];
   public loading:boolean = false;
+  public newExperience:ExperienceI = {};
   private detailsIdFromRoute:number = 0;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {};
@@ -135,5 +136,13 @@ export class CreatorComponent implements OnInit {
         return this.details.experience[Number(index)];
     }
     return null;
+  }
+
+  createExperience() {
+    console.log(this.newExperience)
+    this.http.post<ExperienceI>(`http://localhost:8080/addExperience/` + this.detailsIdFromRoute, this.newExperience)
+      .subscribe((response) => {
+        this.details.experience?.push(this.newExperience)
+      })
   }
 }
