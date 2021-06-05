@@ -75,6 +75,12 @@ export class IndexRouter {
             res.json(await this.securityController.getUserDetail(Number(id)));
         })
 
+        this.router.get('/detailsExists/:id', async (req: Request, res: Response, next:NextFunction): Promise<void> => {
+            const {id} = req.params;
+            const token = extractJWT(req,res,next);
+            res.json(await this.securityController.detailsExist(Number(id), token.email));
+        })
+
         //Experience
         this.router.get('/getExperience/:id', async (req: Request, res: Response): Promise<void> => {
             const {id} = req.params

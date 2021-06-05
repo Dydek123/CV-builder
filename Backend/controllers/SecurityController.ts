@@ -97,6 +97,12 @@ export default class SecurityController {
         return await Details.findOne({id_detail: id});
     }
 
+    public async detailsExist(id: number, emailFromJWT:string): Promise<boolean> {
+        const detail:Details = await Details.findOne({id_detail: id});
+        const user:UserI = await this.getUserByEmail(emailFromJWT);
+        return detail !== undefined && detail.id_user === user.id_user;
+    }
+
     public async getListOfUserDetails(userEmail:string): Promise<detailsI[]> {
         const user = await this.getUserByEmail(userEmail);
         return await Details.find({id_user:user.id_user});
