@@ -3,8 +3,8 @@ export default interface ExperienceI {
   id_details?: number,
   place?: string,
   role?: string,
-  start_date?: Date,
-  end_date?: Date,
+  start_date?: Date | string,
+  end_date?: Date | string,
   is_actual?: boolean,
   description?: string
 }

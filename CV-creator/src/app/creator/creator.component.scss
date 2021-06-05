@@ -20,7 +20,7 @@ mat-spinner{
 main{
   display: flex;
   flex-direction: row;
-  width: 100vw;
+  width: 100%;
 
   article{
     display: flex;
@@ -38,6 +38,7 @@ main{
       flex-direction: column;
       margin: auto;
       width: 50%;
+      padding: 5vh 0;
     }
   }
 
@@ -47,6 +48,8 @@ main{
     align-items: center;
     width: 50%;
     height: 100vh;
+    position: fixed;
+    left: 50%;
 
     div{
       width: 70%;
@@ -109,9 +112,13 @@ main{
         }
         .experience-place{
           display: flex;
-          flex-direction: row;
+          flex-direction: column;
           flex-wrap: wrap;
           padding: .4rem 0;
+          div{
+            display: flex;
+            flex-direction: row;
+          }
         }
         .experience-role{
           color: $cv_color;

@@ -2,8 +2,8 @@
 <main>
   <article>
     <nav>
-      <button mat-button routerLink="/git ">Main page</button>
-      <button mat-button>1</button>
+      <button mat-button routerLink="/">Main page</button>
+      <button mat-button (click)="changeDateFormat()">1</button>
       <button mat-button>2</button>
       <button mat-button>3</button>
       <button mat-button [matMenuTriggerFor]="menu">CV's</button>
@@ -57,6 +57,37 @@
                   [(ngModel)]="details.about"
         ></textarea>
       </mat-form-field>
+
+      <div *ngFor="let experience of details.experience">
+        <mat-form-field>
+          <mat-label>Role</mat-label>
+          <input matInput name="exprerience_role{{experience.id_experience}}" type="text" [value]="experience.role" [(ngModel)]="experience.role">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Place</mat-label>
+          <input matInput name="exprerience_place{{experience.id_experience}}" type="text" [value]="experience.place" [(ngModel)]="experience.place">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Start date</mat-label>
+          <input matInput name="start_date{{experience.id_experience}}" type="date" [value]="experience.start_date" [(ngModel)]="experience.start_date">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>End date</mat-label>
+          <input matInput name="end_date{{experience.id_experience}}" type="date" [value]="experience.end_date" [(ngModel)]="experience.end_date">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Job description</mat-label>
+          <textarea matInput
+                    cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize"
+                    cdkAutosizeMinRows="1"
+                    cdkAutosizeMaxRows="5"
+                    name="job_descritpion{{experience.id_experience}}"
+                    [value]="experience.description"
+                    [(ngModel)]="experience.description"
+          ></textarea>
+        </mat-form-field>
+      </div>
     </form>
   </article>
   <section class="section-cv">
@@ -112,8 +143,12 @@
 
             <div class="experience-details" *ngFor="let item of details.experience">
               <p class="experience-role">{{item.role}}</p>
+              <p>{{item.place}}</p>
               <div class="experience-place">
-                <span>{{item.place}}</span> <span>{{item.start_date}}</span> <span *ngIf="item.is_actual"> - Current</span> <span *ngIf="!item.is_actual">{{item.end_date}}</span>
+                <div>
+                  <span>{{item.start_date}}</span>
+                  <span *ngIf="item.is_actual"> - Current</span> <span *ngIf="!item.is_actual"> - {{item.end_date}}</span>
+                </div>
               </div>
               <p>{{item.description}}</p>
             </div>

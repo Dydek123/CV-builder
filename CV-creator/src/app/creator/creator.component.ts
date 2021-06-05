@@ -4,6 +4,9 @@ import UserDetailsI from "../model/userDetailsI";
 import ExperienceI from "../model/experienceI";
 import {ActivatedRoute, Router} from "@angular/router";
 import userDetailsI from "../model/userDetailsI";
+import experienceI from '../model/experienceI';
+import {formatDate} from "@angular/common";
+import detailsI from "../../../../Backend/interfaces/detailsI";
 
 @Component({
   selector: 'app-creator',
@@ -13,8 +16,9 @@ import userDetailsI from "../model/userDetailsI";
 export class CreatorComponent implements OnInit {
   public details: UserDetailsI = {};
   public userDetailsList: UserDetailsI[] = [];
-  private detailsIdFromRoute:number = 0;
   public loading:boolean = false;
+  private detailsIdFromRoute:number = 0;
+  private isDetail:boolean = false;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {};
 
@@ -34,8 +38,7 @@ export class CreatorComponent implements OnInit {
       this.http.post<UserDetailsI>(`http://localhost:8080/${action}`, this.details)
         .subscribe((response) => {
           this.details = response;
-          console.log(response)
-          // this.router.navigate(['createCV/', this.details.id_detail])
+          this.goToNewCV();
         })
     else
       this.http.put<UserDetailsI>(`http://localhost:8080/${action}`, this.details)
@@ -45,8 +48,19 @@ export class CreatorComponent implements OnInit {
         })
   }
 
+  private goToNewCV() {
+    this.http.get<userDetailsI[]>('http://localhost:8080/getUserDetails')
+      .subscribe((response) => {
+        this.userDetailsList = response;
+        const newDetail = response.reverse()[0];
+        if (newDetail.id_detail !== undefined)
+          this.router.navigate(['createCV/', newDetail.id_detail])
+      })
+  }
+
   private async getDataFromApi(id:number) {
     this.loading = true;
+    await this.detailsExists(id);
     if (this.detailsIdFromRoute !== 0) {
       await this.http.get<UserDetailsI>('http://localhost:8080/getUserDetails/' + id)
         .subscribe((response) => {
@@ -56,6 +70,12 @@ export class CreatorComponent implements OnInit {
       await this.http.get<ExperienceI[]>('http://localhost:8080/getExperience/' + id)
         .subscribe((response) => {
           this.details.experience = response;
+        })
+
+      await this.http.get<experienceI[]>('http://localhost:8080/getExperience/'+ id)
+        .subscribe((response) => {
+          this.details.experience = response;
+          this.changeDateFormat();
         })
     }
 
@@ -71,5 +91,22 @@ export class CreatorComponent implements OnInit {
     const detailId = button.value;
     await this.router.navigate(['/createCV/', detailId]);
     await this.getDataFromApi(Number(detailId));
+  }
+
+  changeDateFormat(){
+    if (this.details.experience !== undefined)
+      for (let experience of this.details.experience){
+        if (experience.start_date)
+          experience.start_date = String(experience.start_date).split('T')[0];
+        if (experience.end_date)
+          experience.end_date = String(experience.end_date).split('T')[0];
+      }
+  }
+
+  private async detailsExists(id:number):Promise<void>{
+    await this.http.get<boolean>('http://localhost:8080/detailsExists/'+ id)
+      .subscribe((response) => {
+        if (!response) this.router.navigate(['createCV']);
+      });
   }
 }
