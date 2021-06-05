@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import UserDetailsI from "../model/userDetailsI";
-import ExperienceI from "../model/experienceI";
-import {ActivatedRoute, Router} from "@angular/router";
 import userDetailsI from "../model/userDetailsI";
-import experienceI from '../model/experienceI';
-import {formatDate} from "@angular/common";
-import detailsI from "../../../../Backend/interfaces/detailsI";
+import ExperienceI from "../model/experienceI";
+import experienceI from "../model/experienceI";
+import {ActivatedRoute, Router} from "@angular/router";
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-creator',
@@ -16,11 +16,12 @@ import detailsI from "../../../../Backend/interfaces/detailsI";
 export class CreatorComponent implements OnInit {
   public details: UserDetailsI = {};
   public userDetailsList: UserDetailsI[] = [];
-  public loading:boolean = false;
-  public newExperience:ExperienceI = {};
-  private detailsIdFromRoute:number = 0;
+  public loading: boolean = false;
+  public newExperience: ExperienceI = {};
+  private detailsIdFromRoute: number = 0;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {};
+  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
+  };
 
   async ngOnInit(): Promise<void> {
     const routeParams = this.route.snapshot.paramMap;
@@ -33,8 +34,8 @@ export class CreatorComponent implements OnInit {
   }
 
   saveDetails(): void {
-    const action = this.detailsIdFromRoute===0?'addDetails':`editDetails/${this.details.id_detail}`;
-    if (this.detailsIdFromRoute===0)
+    const action = this.detailsIdFromRoute === 0 ? 'addDetails' : `editDetails/${this.details.id_detail}`;
+    if (this.detailsIdFromRoute === 0)
       this.http.post<UserDetailsI>(`http://localhost:8080/${action}`, this.details)
         .subscribe((response) => {
           this.details = response;
@@ -58,7 +59,7 @@ export class CreatorComponent implements OnInit {
       })
   }
 
-  private async getDataFromApi(id:number) {
+  private async getDataFromApi(id: number) {
     this.loading = true;
     await this.detailsExists(id);
     if (this.detailsIdFromRoute !== 0) {
@@ -72,7 +73,7 @@ export class CreatorComponent implements OnInit {
           this.details.experience = response;
         })
 
-      await this.http.get<experienceI[]>('http://localhost:8080/getExperience/'+ id)
+      await this.http.get<experienceI[]>('http://localhost:8080/getExperience/' + id)
         .subscribe((response) => {
           this.details.experience = response;
           this.changeDateFormat();
@@ -93,9 +94,9 @@ export class CreatorComponent implements OnInit {
     await this.getDataFromApi(Number(detailId));
   }
 
-  changeDateFormat(){
+  changeDateFormat() {
     if (this.details.experience !== undefined)
-      for (let experience of this.details.experience){
+      for (let experience of this.details.experience) {
         if (experience.start_date)
           experience.start_date = String(experience.start_date).split('T')[0];
         if (experience.end_date)
@@ -116,22 +117,23 @@ export class CreatorComponent implements OnInit {
   saveExperience(event: Event) {
     const button = event.target as HTMLButtonElement;
     const experienceId = button.value;
-    const experience:ExperienceI|null = this.searchForExperience(Number(experienceId));
+    const experience: ExperienceI | null = this.searchForExperience(Number(experienceId));
     if (experience !== null)
       this.http.put<ExperienceI>(`http://localhost:8080/editExperience/` + experienceId, experience)
-        .subscribe((response) => {})
+        .subscribe((response) => {
+        })
   }
 
 
-  private async detailsExists(id:number):Promise<void>{
-    await this.http.get<boolean>('http://localhost:8080/detailsExists/'+ id)
+  private async detailsExists(id: number): Promise<void> {
+    await this.http.get<boolean>('http://localhost:8080/detailsExists/' + id)
       .subscribe((response) => {
         if (!response) this.router.navigate(['createCV']);
       });
   }
 
-  searchForExperience(id:number):ExperienceI|null{
-    for (let index in this.details.experience){
+  searchForExperience(id: number): ExperienceI | null {
+    for (let index in this.details.experience) {
       if (this.details.experience[Number(index)].id_experience === id)
         return this.details.experience[Number(index)];
     }
@@ -144,5 +146,26 @@ export class CreatorComponent implements OnInit {
       .subscribe((response) => {
         this.details.experience?.push(this.newExperience)
       })
+  }
+
+  public openPDF():void {
+    let DATA = document.getElementById('toDownload');
+
+    console.log(123)
+    if (DATA) {
+      console.log(123)
+      html2canvas(DATA).then(canvas => {
+
+        let fileWidth = 208;
+        let fileHeight = 297;
+
+        const FILEURI = canvas.toDataURL('image/png')
+        let PDF = new jsPDF('p', 'mm', 'a4');
+        let position = 0;
+        PDF.addImage(FILEURI, 'PNG', -4, position, fileWidth, fileHeight)
+
+        PDF.save('angular-demo.pdf');
+      });
+    }
   }
 }
