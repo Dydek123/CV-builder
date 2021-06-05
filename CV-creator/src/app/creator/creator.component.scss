@@ -32,6 +32,10 @@ main{
       justify-content: center;
       height: 4vh;
       background: #616263;
+
+      .mat-button{
+        color: white;
+      }
     }
     form{
       display: flex;

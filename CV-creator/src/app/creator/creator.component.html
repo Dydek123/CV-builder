@@ -3,10 +3,8 @@
   <article>
     <nav>
       <button mat-button routerLink="/">Main page</button>
-      <button mat-button (click)="changeDateFormat()">1</button>
-      <button mat-button>2</button>
+      <button mat-button color="primary" [matMenuTriggerFor]="menu">CV's</button>
       <button mat-button (click)="openPDF()">Download</button>
-      <button mat-button [matMenuTriggerFor]="menu">CV's</button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item *ngFor="let detail of userDetailsList" value="{{detail.id_detail}}" (click)="changeCV($event)">{{detail.name}}</button>
       </mat-menu>

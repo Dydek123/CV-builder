@@ -150,10 +150,7 @@ export class CreatorComponent implements OnInit {
 
   public openPDF():void {
     let DATA = document.getElementById('toDownload');
-
-    console.log(123)
     if (DATA) {
-      console.log(123)
       html2canvas(DATA).then(canvas => {
 
         let fileWidth = 208;
@@ -164,7 +161,7 @@ export class CreatorComponent implements OnInit {
         let position = 0;
         PDF.addImage(FILEURI, 'PNG', -4, position, fileWidth, fileHeight)
 
-        PDF.save('angular-demo.pdf');
+        PDF.save('CV.pdf');
       });
     }
   }
