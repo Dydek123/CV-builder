@@ -94,9 +94,16 @@ export class IndexRouter {
             res.json(response);
         })
 
-        this.router.put('/editExperience', async (req: Request, res: Response): Promise<void> => {
+        this.router.put('/editExperience/:id', async (req: Request, res: Response): Promise<void> => {
             const body: experienceI = req.body;
-            const response: responseStatus = await this.securityController.editExperience(body);
+            const {id} = req.params;
+            const response: responseStatus = await this.securityController.editExperience(body, Number(id));
+            res.json(response);
+        })
+
+        this.router.delete('/deleteExperience/:id', async (req: Request, res: Response): Promise<void> => {
+            const {id} = req.params;
+            const response: responseStatus = await this.securityController.deleteExperience(Number(id));
             res.json(response);
         })
 

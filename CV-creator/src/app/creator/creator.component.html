@@ -58,7 +58,8 @@
         ></textarea>
       </mat-form-field>
 
-      <div *ngFor="let experience of details.experience">
+      <div class="cv_experience" *ngFor="let experience of details.experience">
+        <mat-divider></mat-divider>
         <mat-form-field>
           <mat-label>Role</mat-label>
           <input matInput name="exprerience_role{{experience.id_experience}}" type="text" [value]="experience.role" [(ngModel)]="experience.role">
@@ -87,6 +88,11 @@
                     [(ngModel)]="experience.description"
           ></textarea>
         </mat-form-field>
+
+        <div class="experience_buttons">
+          <button mat-button value="{{experience.id_experience}}" (click)="saveExperience($event)">Save</button>
+          <button mat-button color="warn" value="{{experience.id_experience}}" (click)="deleteExperience($event)">Remove</button>
+        </div>
       </div>
     </form>
   </article>

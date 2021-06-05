@@ -18,7 +18,6 @@ export class CreatorComponent implements OnInit {
   public userDetailsList: UserDetailsI[] = [];
   public loading:boolean = false;
   private detailsIdFromRoute:number = 0;
-  private isDetail:boolean = false;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {};
 
@@ -103,10 +102,38 @@ export class CreatorComponent implements OnInit {
       }
   }
 
+  deleteExperience(event: Event) {
+    const button = event.target as HTMLButtonElement;
+    const experienceId = button.value;
+    console.log(experienceId)
+    this.http.delete<ExperienceI>(`http://localhost:8080/deleteExperience/` + experienceId)
+      .subscribe((response) => {
+        console.log(this.details.experience)
+      })
+  }
+
+  saveExperience(event: Event) {
+    const button = event.target as HTMLButtonElement;
+    const experienceId = button.value;
+    const experience:ExperienceI|null = this.searchForExperience(Number(experienceId));
+    if (experience !== null)
+      this.http.put<ExperienceI>(`http://localhost:8080/editExperience/` + experienceId, experience)
+        .subscribe((response) => {})
+  }
+
+
   private async detailsExists(id:number):Promise<void>{
     await this.http.get<boolean>('http://localhost:8080/detailsExists/'+ id)
       .subscribe((response) => {
         if (!response) this.router.navigate(['createCV']);
       });
+  }
+
+  searchForExperience(id:number):ExperienceI|null{
+    for (let index in this.details.experience){
+      if (this.details.experience[Number(index)].id_experience === id)
+        return this.details.experience[Number(index)];
+    }
+    return null;
   }
 }

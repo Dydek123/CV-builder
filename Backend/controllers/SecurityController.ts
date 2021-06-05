@@ -113,9 +113,17 @@ export default class SecurityController {
         return this.createNewExperience(experience, id);
     }
 
-    public async editExperience(experience: experienceI): Promise<responseStatus> {
+    public async editExperience(experience: experienceI, id:number): Promise<responseStatus> {
         if (!Object.keys(experience).length) return this.setErrorResponse('Set some data');
-        return this.setNewExperience(experience);
+        return this.setNewExperience(experience, id);
+    }
+
+    public async deleteExperience(id:number): Promise<responseStatus> {
+        const experience = await Experience.findOne(id);
+        if (!experience)
+            return this.setErrorResponse('Experience does not exist');
+        await Experience.remove(experience);
+        return this.setSuccessResponse();
     }
 
     public async getExperience(id: number) {
@@ -197,8 +205,8 @@ export default class SecurityController {
         }
     }
 
-    private async setNewExperience(experience: experienceI): Promise<responseStatus> {
-        const newExperience = await Experience.findOne(experience.id_experience);
+    private async setNewExperience(experience: experienceI, id:number): Promise<responseStatus> {
+        const newExperience = await Experience.findOne(id);
         const items = ['place', 'start_date', 'end_date', 'description', 'role'];
         for (const item of items) {
             newExperience[item] = experience[item] || null;
