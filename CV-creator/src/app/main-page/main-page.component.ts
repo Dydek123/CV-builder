@@ -1,7 +1,5 @@
 import {Component} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
 import {AuthService} from "../auth.service";
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-main-page',
@@ -9,7 +7,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./main-page.component.scss']
 })
 export class MainPageComponent {
-  is_logged:boolean = !!localStorage.getItem('user');
+  is_logged: boolean = !!localStorage.getItem('user');
   button_value = 0;
   opinions = [
     {
@@ -25,9 +23,10 @@ export class MainPageComponent {
     },
   ]
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {
+  }
 
-  logout(){
+  logout() {
     this.authService.logout();
     this.is_logged = false;
   }
