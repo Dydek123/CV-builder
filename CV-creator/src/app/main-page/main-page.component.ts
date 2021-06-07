@@ -15,7 +15,7 @@ export class MainPageComponent {
       image: 'example_photo.jpg',
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur consequat ultricies pharetra. Donec fermentum eget metus vitae finibus. Nulla imperdiet, tellus ac finibus placerat, neque dolor facilisis nisi, eu euismod metus lorem id neque. Aliquam non sapien at lacus euismod iaculis id consequat ipsum. Cras dapibus nisi vitae pretium iaculis.'
     },
-    {name: 'Anna Kowalczyk', image: 'face.png', text: 'Polecam tą stronę.'},
+    {name: 'Anna Kowalczyk', image: 'example_photo2.jpg', text: 'Polecam tą stronę.'},
     {
       name: 'Zdzisław Marecki',
       image: 'example_photo.jpg',
