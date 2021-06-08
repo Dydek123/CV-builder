@@ -1,0 +1,35 @@
+<form>
+  <h2>Upload new photo</h2>
+  <mat-form-field>
+    <mat-label>Full name</mat-label>
+    <input matInput name="fullName">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Hard Skills</mat-label>
+    <input matInput name="hardSkills">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Soft Skills</mat-label>
+    <input matInput name="softSkills">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input matInput name="email" type="email">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Phone number</mat-label>
+    <input matInput name="phone" type="tel">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Autosize textarea</mat-label>
+    <textarea matInput
+              cdkTextareaAutosize
+              #autosize="cdkTextareaAutosize"
+              cdkAutosizeMinRows="1"
+              cdkAutosizeMaxRows="5"></textarea>
+  </mat-form-field>
+  <div class="new-photo-buttons">
+    <button mat-raised-button color="warn" type="reset">Reset input</button>
+    <button mat-raised-button type="submit" class="save-changes-button">Save change</button>
+  </div>
+</form>

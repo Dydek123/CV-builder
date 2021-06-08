@@ -1,0 +1,11 @@
+<form>
+  <h2>Upload new photo</h2>
+  <mat-form-field>
+    <ngx-mat-file-input color="primary" (click)="filePicker.click()"></ngx-mat-file-input>
+    <input type="file" #filePicker>
+  </mat-form-field>
+  <div class="new-photo-buttons">
+    <button mat-raised-button color="warn" type="reset">Reset input</button>
+    <button mat-raised-button type="submit" class="save-changes-button">Save changes</button>
+  </div>
+</form>

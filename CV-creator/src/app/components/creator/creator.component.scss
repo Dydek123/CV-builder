@@ -1,0 +1,160 @@
+$cv_color: #93d7f9;
+$cream: #fef7f3;
+
+*{
+  margin: 0;
+}
+
+.spinner_wrapper{
+  background: $cream;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+}
+mat-spinner{
+  margin: auto;
+  top: 50%;
+}
+
+main{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+  article{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    min-height: 100vh;
+    nav{
+      display: flex;
+      justify-content: center;
+      height: 4vh;
+      background: #616263;
+
+      .mat-button{
+        color: white;
+      }
+    }
+    form{
+      display: flex;
+      flex-direction: column;
+      margin: auto;
+      width: 50%;
+      padding: 5vh 0;
+    }
+  }
+
+
+  mat-form-field{
+    width: 100%;
+  }
+
+  .cv_experience{
+    width: 100%;
+
+    mat-divider{
+      padding: 1rem 0;
+    }
+
+    .experience_buttons{
+      margin-left: auto;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+    }
+  }
+
+  section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100vh;
+    position: fixed;
+    left: 50%;
+
+    div{
+      width: 70%;
+      height: 90%;
+      display: flex;
+      flex-direction: row;
+
+      div{
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        font-family: 'Lato', sans-serif;
+
+        h3{
+          font-size: 1.2rem;
+          font-weight: 600;
+          padding: .7rem 0;
+        }
+      }
+
+      .template1__container {
+        width: 100%;
+        margin: 4rem 0;
+        text-align: left;
+      }
+
+      .template1-left{
+        width: 30%;
+        background: $cv_color;
+        .template1-about{
+          width: calc(100% - 2rem);
+          padding: 0 1rem;
+
+          div{
+            height: auto;
+            padding: .2rem 0;
+          }
+
+          span{
+            padding: .1rem 0;
+          }
+        }
+      }
+
+      .template1-right{
+        background: white;
+
+        h2{
+          text-align: center;
+        }
+
+        .experience{
+          width: calc(100% - 4rem);
+          padding: .5rem 2rem;
+          height: auto;
+        }
+        .experience-details{
+          width: 100%;
+          padding: 1rem 0;
+        }
+        .experience-place{
+          display: flex;
+          flex-direction: column;
+          flex-wrap: wrap;
+          padding: .4rem 0;
+          div{
+            display: flex;
+            flex-direction: row;
+          }
+        }
+        .experience-role{
+          color: $cv_color;
+        }
+
+        .agreement{
+          font-size: .7rem;
+          width: calc(100% - 4rem);
+          padding: .5rem 2rem;
+        }
+      }
+    }
+  }
+}

@@ -4,6 +4,7 @@ The project involves the creation of a CV builder. The user will be able to choo
 ## Table of contents
 * [Technologies](#technologies)
 * [Setup](#setup)
+* [Site](#site)
 
 ## Technologies
 * HTML 5
@@ -14,8 +15,30 @@ The project involves the creation of a CV builder. The user will be able to choo
 * Node.js (Express.js)
 
 ## Setup
-Or run this project on local machine
+Run server
+```
+$ cd Backend
+$ npm start
+```
 
+Run frontend
 ```
-$ npm run dev
+$ cd CV-creator
+$ npm start
 ```
+
+## Site
+Main page
+<p align="center">
+  <img src="Screenshots/main_page.png" />
+</p>
+
+Profile
+<p align="center">
+  <img src="Screenshots/profile.png" />
+</p>
+
+Creator
+<p align="center">
+  <img src="Screenshots/creator.png" />
+</p>

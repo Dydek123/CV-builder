@@ -1,0 +1,206 @@
+<div class="spinner_wrapper"  *ngIf="loading"><mat-spinner></mat-spinner></div>
+<main>
+  <article>
+    <nav>
+      <button mat-button routerLink="/">Main page</button>
+      <button mat-button routerLink="/profile">Profile</button>
+      <button mat-button routerLink="/createCV">Create new CV</button>
+      <button mat-button color="primary" [matMenuTriggerFor]="menu">CV's</button>
+      <button mat-button (click)="openPDF()">Download</button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item *ngFor="let detail of userDetailsList" value="{{detail.id_detail}}" (click)="changeCV($event)">{{detail.name}}</button>
+      </mat-menu>
+      <button mat-button (click)="saveDetails()">Save</button>
+    </nav>
+    <form (change)="changeValues()">
+      <mat-form-field>
+        <mat-label>First name</mat-label>
+        <input matInput name="name" [value]="details.name" [(ngModel)]="details.name">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Second name</mat-label>
+        <input matInput name="surname" [value]="details.surname" [(ngModel)]="details.surname">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Hard Skills</mat-label>
+        <input matInput name="hardSkills" [value]="details.hard_skills" [(ngModel)]="details.hard_skills">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Soft Skills</mat-label>
+        <input matInput name="softSkills" [value]="details.soft_skills" [(ngModel)]="details.soft_skills">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput name="email" type="email" [value]="details.email" [(ngModel)]="details.email">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Phone number</mat-label>
+        <input matInput name="phone" type="tel" [value]="details.phone_number" [(ngModel)]="details.phone_number">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Address</mat-label>
+        <input matInput name="address" type="text" [value]="details.address" [(ngModel)]="details.address">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Languages</mat-label>
+        <input matInput name="phone" type="text" [value]="details.language" [(ngModel)]="details.language">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>About me</mat-label>
+        <textarea matInput
+                  cdkTextareaAutosize
+                  #autosize="cdkTextareaAutosize"
+                  cdkAutosizeMinRows="1"
+                  cdkAutosizeMaxRows="5"
+                  name="about"
+                  [value]="details.about"
+                  [(ngModel)]="details.about"
+        ></textarea>
+      </mat-form-field>
+
+      <div class="cv_experience" *ngFor="let experience of details.experience">
+        <mat-divider></mat-divider>
+        <mat-form-field>
+          <mat-label>Role</mat-label>
+          <input matInput name="exprerience_role{{experience.id_experience}}" type="text" [value]="experience.role" [(ngModel)]="experience.role">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Place</mat-label>
+          <input matInput name="exprerience_place{{experience.id_experience}}" type="text" [value]="experience.place" [(ngModel)]="experience.place">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Start date</mat-label>
+          <input matInput name="start_date{{experience.id_experience}}" type="date" [value]="experience.start_date" [(ngModel)]="experience.start_date">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>End date</mat-label>
+          <input matInput name="end_date{{experience.id_experience}}" type="date" [value]="experience.end_date" [(ngModel)]="experience.end_date">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Job description</mat-label>
+          <textarea matInput
+                    cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize"
+                    cdkAutosizeMinRows="1"
+                    cdkAutosizeMaxRows="5"
+                    name="job_descritpion{{experience.id_experience}}"
+                    [value]="experience.description"
+                    [(ngModel)]="experience.description"
+          ></textarea>
+        </mat-form-field>
+
+        <div class="experience_buttons">
+          <button mat-button value="{{experience.id_experience}}" (click)="saveExperience($event)">Save</button>
+          <button mat-button color="warn" value="{{experience.id_experience}}" (click)="deleteExperience($event)">Remove</button>
+        </div>
+      </div>
+
+      <div class="cv_experience">
+        <mat-divider></mat-divider>
+        <mat-form-field>
+          <mat-label>Role</mat-label>
+          <input matInput name="exprerience_role{{newExperience.id_experience}}" type="text" [value]="newExperience.role" [(ngModel)]="newExperience.role">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Place</mat-label>
+          <input matInput name="exprerience_place{{newExperience.id_experience}}" type="text" [value]="newExperience.place" [(ngModel)]="newExperience.place">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Start date</mat-label>
+          <input matInput name="start_date{{newExperience.id_experience}}" type="date" [value]="newExperience.start_date" [(ngModel)]="newExperience.start_date">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>End date</mat-label>
+          <input matInput name="end_date{{newExperience.id_experience}}" type="date" [value]="newExperience.end_date" [(ngModel)]="newExperience.end_date">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Job description</mat-label>
+          <textarea matInput
+                    cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize"
+                    cdkAutosizeMinRows="1"
+                    cdkAutosizeMaxRows="5"
+                    name="job_descritpion{{newExperience.id_experience}}"
+                    [value]="newExperience.description"
+                    [(ngModel)]="newExperience.description"
+          ></textarea>
+        </mat-form-field>
+
+        <div class="experience_buttons">
+          <button mat-button (click)="createExperience()">Create</button>
+        </div>
+      </div>
+    </form>
+  </article>
+  <section class="section-cv">
+    <div class="template1" id="toDownload">
+      <div class="template1-left">
+        <div class="template1__container">
+          <div class="template1-about">
+            <h3 *ngIf="details.about">About</h3>
+            {{details.about}}
+            <h3 *ngIf="details.address || details.email || details.phone_number">Contact</h3>
+            <div *ngIf="details.address">
+              <h4>Address</h4>
+              <span>{{details.address}}</span>
+            </div>
+            <div *ngIf="details.email">
+              <h4>Email</h4>
+              <span>{{details.email}}</span>
+            </div>
+            <div *ngIf="details.phone_number">
+              <h4>Phone number</h4>
+              <span>{{details.phone_number}}</span>
+            </div>
+
+            <div *ngIf="details.hard_skills">
+              <h3>Hard skills</h3>
+              <span class="hard_skills" *ngFor="let hardSkill of details.hard_skills.split(', ')">
+              {{hardSkill}}
+              </span>
+            </div>
+
+            <div *ngIf="details.soft_skills">
+              <h3>Soft skills</h3>
+              <span class="soft_skills" *ngFor="let softSkill of details.soft_skills.split(', ')">
+              {{softSkill}}
+              </span>
+            </div>
+
+            <div *ngIf="details.language">
+              <h3>Languages</h3>
+              <span class="languages" *ngFor="let language of details.language.split(', ')">
+              {{language}}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="template1-right">
+        <div class="template1__container">
+          <h2 class="name">{{details.name}} {{details.surname}}</h2>
+
+          <div class="experience">
+            <h3 *ngIf="details.experience">Experience</h3>
+
+            <div class="experience-details" *ngFor="let item of details.experience">
+              <p class="experience-role">{{item.role}}</p>
+              <p>{{item.place}}</p>
+              <div class="experience-place">
+                <div>
+                  <span>{{item.start_date}}</span>
+                  <span *ngIf="item.is_actual"> - Current</span> <span *ngIf="!item.is_actual"> - {{item.end_date}}</span>
+                </div>
+              </div>
+              <p>{{item.description}}</p>
+            </div>
+          </div>
+
+          <div class="agreement" *ngIf="details.agreement">
+            I agree to the processing of personal data provided in this document for realising the recruitment process pursuant to the Personal Data Protection Act of 10 May 2018 (Journal of Laws 2018, item 1000) and in agreement with Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 on the protection of natural persons with regard to the processing of personal data and on the free movement of such data, and repealing Directive 95/46/EC (General Data Protection Regulation)
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
