@@ -1,7 +1,5 @@
 import {Component} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {AuthService} from "../auth.service";
-import {Router} from "@angular/router";
+import {AuthService} from "../../auth.service";
 
 @Component({
   selector: 'app-main-page',
@@ -9,7 +7,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./main-page.component.scss']
 })
 export class MainPageComponent {
-  is_logged:boolean = !!localStorage.getItem('user');
+  is_logged: boolean = !!localStorage.getItem('user');
   button_value = 0;
   opinions = [
     {
@@ -17,7 +15,7 @@ export class MainPageComponent {
       image: 'example_photo.jpg',
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur consequat ultricies pharetra. Donec fermentum eget metus vitae finibus. Nulla imperdiet, tellus ac finibus placerat, neque dolor facilisis nisi, eu euismod metus lorem id neque. Aliquam non sapien at lacus euismod iaculis id consequat ipsum. Cras dapibus nisi vitae pretium iaculis.'
     },
-    {name: 'Anna Kowalczyk', image: 'face.png', text: 'Polecam tą stronę.'},
+    {name: 'Anna Kowalczyk', image: 'example_photo2.jpg', text: 'Polecam tą stronę.'},
     {
       name: 'Zdzisław Marecki',
       image: 'example_photo.jpg',
@@ -25,10 +23,11 @@ export class MainPageComponent {
     },
   ]
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {
+  }
 
-  logout(){
+  logout():void{
     this.authService.logout();
-    // this.is_logged = false;
+    this.is_logged = false;
   }
 }

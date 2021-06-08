@@ -1,10 +1,9 @@
 import {Component} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {AuthService} from "../auth.service";
-import {User} from '../model/User';
+import {AuthService} from "../../auth.service";
+import {User} from '../../model/User';
 import {Router} from "@angular/router";
-import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
-import {ErrorStateMatcher} from '@angular/material/core';
+import {FormControl, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +13,7 @@ import {ErrorStateMatcher} from '@angular/material/core';
 export class LoginComponent {
   email: string = '';
   password: string = '';
-  status:string|undefined;
+  status: string | undefined;
 
   constructor(private http: HttpClient, private authService: AuthService, private router: Router) {
   }
@@ -31,7 +30,6 @@ export class LoginComponent {
       .subscribe(data => {
         if (data.status === 'success') this.router.navigate([''])
         this.status = data.status;
-        console.log(this.status)
       });
   }
 }

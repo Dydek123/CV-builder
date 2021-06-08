@@ -1,3 +1,4 @@
+<div class="spinner_wrapper"  *ngIf="loading"><mat-spinner></mat-spinner></div>
 <div class="container">
   <header>
     <a href="#">Go back</a>
@@ -29,16 +30,16 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <div class="panel-projects-container">
-            <div class="panel-project" *ngFor="let project of projects">
+            <div class="panel-project" *ngFor="let project of details">
               <div>
                 <h2>
                   {{project.name}}
                 </h2>
-                <a href="#">Edit</a>
-                <a href="#">Download</a>
-                <a href="#">Copy link</a>
+                <button routerLink="/createCV/{{project.id_detail}}">Edit</button>
+                <button value="{{project.id_detail}}" (click)="copyLink($event)">Copy link</button>
+                <button value="{{project.id_detail}}" (click)="deleteProject($event)">Delete</button>
               </div>
-              <img src="assets/{{project.preview}}" alt="{{project.preview}} template preview">
+              <img src="assets/cv-example.png" alt="cv-example.png template preview">
             </div>
           </div>
         </mat-expansion-panel>

@@ -51,9 +51,10 @@ export class IndexRouter {
         })
 
         //Details
-        this.router.post('/addDetails', async (req: Request, res: Response): Promise<void> => {
+        this.router.post('/addDetails', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
             const body: detailsI = req.body;
-            const response: responseStatus = await this.securityController.add_user_details(body);
+            const token = extractJWT(req,res,next);
+            const response: responseStatus = await this.securityController.add_user_details(body, token.email);
             res.json(response);
         })
 
@@ -64,13 +65,27 @@ export class IndexRouter {
             res.json(response);
         })
 
+        this.router.delete('/deleteDetails/:id', async (req: Request, res: Response): Promise<void> => {
+            const {id} = req.params;
+            const response: responseStatus = await this.securityController.deleteDetail(Number(id));
+            res.json(response);
+        })
+
+
         this.router.get('/getUserDetails', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-            res.json(await this.securityController.getUser(Number(1))); //TODO id from session
+            const token = extractJWT(req,res,next);
+            res.json(await this.securityController.getListOfUserDetails(token.email));
         })
 
         this.router.get('/getUserDetails/:id', async (req: Request, res: Response): Promise<void> => {
             const {id} = req.params;
             res.json(await this.securityController.getUserDetail(Number(id)));
+        })
+
+        this.router.get('/detailsExists/:id', async (req: Request, res: Response, next:NextFunction): Promise<void> => {
+            const {id} = req.params;
+            const token = extractJWT(req,res,next);
+            res.json(await this.securityController.detailsExist(Number(id), token.email));
         })
 
         //Experience
@@ -86,9 +101,16 @@ export class IndexRouter {
             res.json(response);
         })
 
-        this.router.put('/editExperience', async (req: Request, res: Response): Promise<void> => {
+        this.router.put('/editExperience/:id', async (req: Request, res: Response): Promise<void> => {
             const body: experienceI = req.body;
-            const response: responseStatus = await this.securityController.editExperience(body);
+            const {id} = req.params;
+            const response: responseStatus = await this.securityController.editExperience(body, Number(id));
+            res.json(response);
+        })
+
+        this.router.delete('/deleteExperience/:id', async (req: Request, res: Response): Promise<void> => {
+            const {id} = req.params;
+            const response: responseStatus = await this.securityController.deleteExperience(Number(id));
             res.json(response);
         })
 

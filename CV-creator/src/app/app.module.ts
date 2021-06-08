@@ -8,20 +8,23 @@ import {MatButtonModule} from '@angular/material/button';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
+import {MatMenuModule} from '@angular/material/menu';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {LoginComponent} from './login/login.component';
-import {MainPageComponent} from './main-page/main-page.component';
-import {AppRegisterComponent} from './app-register/app-register.component';
-import {ProfileComponent} from './profile/profile.component'
+import {LoginComponent} from './components/login/login.component';
+import {MainPageComponent} from './components/main-page/main-page.component';
+import {AppRegisterComponent} from './components/app-register/app-register.component';
+import {ProfileComponent} from './components/profile/profile.component'
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatDialogModule} from '@angular/material/dialog';
-import {DialogComponent} from "./profile/dialog/dialog.component";
+import {DialogComponent} from "./components/profile/dialog/dialog.component";
 import {NgxMatFileInputModule} from '@angular-material-components/file-input';
-import {EditDetailsComponent} from "./profile/edit_details/edit_details.component";
+import {EditDetailsComponent} from "./components/profile/edit_details/edit_details.component";
 import {TextFieldModule} from '@angular/cdk/text-field';
 import {MatRadioModule} from '@angular/material/radio';
-import {CreatorComponent} from './creator/creator.component';
-import {AuthInterceptor} from "./interceptors/auth.interceptor";
+import {CreatorComponent} from './components/creator/creator.component';
+import {AuthInterceptor} from "./interceptor/auth.interceptor";
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatDividerModule} from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -48,6 +51,9 @@ import {AuthInterceptor} from "./interceptors/auth.interceptor";
     TextFieldModule,
     MatRadioModule,
     HttpClientModule,
+    MatMenuModule,
+    MatProgressSpinnerModule,
+    MatDividerModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
