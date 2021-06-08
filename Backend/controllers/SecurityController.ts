@@ -11,6 +11,7 @@ import {Experience} from "../entity/Experience";
 import authResponse from "../interfaces/authResponse";
 import {UserI} from "../interfaces/userI";
 import signJWT from "../jwt/signJWT";
+import ExperienceI from "../../CV-creator/src/app/model/experienceI";
 
 const bcrypt = require('bcrypt');
 
@@ -85,7 +86,7 @@ export default class SecurityController {
         return this.setSuccessResponse();
     }
 
-    public async deleteDetail(id: number) {
+    public async deleteDetail(id: number): Promise<responseStatus> {
         const detail = await Details.findOne(id);
         if (!detail)
             return this.setErrorResponse('Details does not exist');
@@ -134,7 +135,7 @@ export default class SecurityController {
         return this.setSuccessResponse();
     }
 
-    public async getExperience(id: number) {
+    public async getExperience(id: number): Promise<ExperienceI[]> {
         return await Experience.find({id_details: id});
     }
 
@@ -159,7 +160,7 @@ export default class SecurityController {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
 
-    private async createUser(register_data: registerData) {
+    private async createUser(register_data: registerData): Promise<responseStatus> {
         const user = new User();
         user.password = await bcrypt.hash(register_data.password, 10);
 

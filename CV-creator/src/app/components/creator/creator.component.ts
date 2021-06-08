@@ -49,7 +49,7 @@ export class CreatorComponent implements OnInit {
         })
   }
 
-  private goToNewCV() {
+  private goToNewCV():void{
     this.http.get<userDetailsI[]>('http://localhost:8080/getUserDetails')
       .subscribe((response) => {
         this.userDetailsList = response;
@@ -59,7 +59,7 @@ export class CreatorComponent implements OnInit {
       })
   }
 
-  private async getDataFromApi(id: number) {
+  private async getDataFromApi(id: number):Promise<void> {
     this.loading = true;
     await this.detailsExists(id);
     if (this.detailsIdFromRoute !== 0) {
@@ -87,14 +87,14 @@ export class CreatorComponent implements OnInit {
       })
   }
 
-  async changeCV(event: Event) {
+  async changeCV(event: Event):Promise<void>{
     const button = event.target as HTMLButtonElement;
     const detailId = button.value;
     await this.router.navigate(['/createCV/', detailId]);
     await this.getDataFromApi(Number(detailId));
   }
 
-  changeDateFormat() {
+  changeDateFormat():void {
     if (this.details.experience !== undefined)
       for (let experience of this.details.experience) {
         if (experience.start_date)
@@ -104,7 +104,7 @@ export class CreatorComponent implements OnInit {
       }
   }
 
-  deleteExperience(event: Event) {
+  deleteExperience(event: Event):void {
     const button = event.target as HTMLButtonElement;
     const experienceId = button.value;
     console.log(experienceId)
@@ -114,7 +114,7 @@ export class CreatorComponent implements OnInit {
       })
   }
 
-  saveExperience(event: Event) {
+  saveExperience(event: Event):void {
     const button = event.target as HTMLButtonElement;
     const experienceId = button.value;
     const experience: ExperienceI | null = this.searchForExperience(Number(experienceId));
@@ -140,7 +140,7 @@ export class CreatorComponent implements OnInit {
     return null;
   }
 
-  createExperience() {
+  createExperience():void {
     console.log(this.newExperience)
     this.http.post<ExperienceI>(`http://localhost:8080/addExperience/` + this.detailsIdFromRoute, this.newExperience)
       .subscribe((response) => {

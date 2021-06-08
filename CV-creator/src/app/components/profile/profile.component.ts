@@ -45,14 +45,14 @@ export class ProfileComponent{
     });
   }
 
-  copyLink(event: Event) {
+  copyLink(event: Event):void{
     const button = event.target as HTMLButtonElement;
     const detailId = button.value;
     navigator.clipboard.writeText('http://localhost:4200/createCV/'+detailId)
       .then(() => alert('Successfully copied'))
   }
 
-  deleteProject(event: Event) {
+  deleteProject(event: Event):void {
     const button = event.target as HTMLButtonElement;
     const detailId = button.value;
     this.http.delete<responseStatus>('http://localhost:8080/deleteDetails/' + detailId)

@@ -16,7 +16,7 @@ export class AppRegisterComponent {
   constructor(private http: HttpClient) {
   }
 
-  onRegister() {
+  onRegister():void {
     this.http.post<{ status: string, errors: string[] }>('http://localhost:8080/register', {
       email: this.email,
       password: this.password,

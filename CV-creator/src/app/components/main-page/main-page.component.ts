@@ -26,7 +26,7 @@ export class MainPageComponent {
   constructor(private authService: AuthService) {
   }
 
-  logout() {
+  logout():void{
     this.authService.logout();
     this.is_logged = false;
   }
