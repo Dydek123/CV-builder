@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import UserDetailsI from "../model/userDetailsI";
-import userDetailsI from "../model/userDetailsI";
-import ExperienceI from "../model/experienceI";
-import experienceI from "../model/experienceI";
+import UserDetailsI from "../../model/userDetailsI";
+import userDetailsI from "../../model/userDetailsI";
+import ExperienceI from "../../model/experienceI";
+import experienceI from "../../model/experienceI";
 import {ActivatedRoute, Router} from "@angular/router";
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';

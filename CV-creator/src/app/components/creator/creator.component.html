@@ -3,6 +3,8 @@
   <article>
     <nav>
       <button mat-button routerLink="/">Main page</button>
+      <button mat-button routerLink="/profile">Profile</button>
+      <button mat-button routerLink="/createCV">Create new CV</button>
       <button mat-button color="primary" [matMenuTriggerFor]="menu">CV's</button>
       <button mat-button (click)="openPDF()">Download</button>
       <mat-menu #menu="matMenu">
@@ -137,7 +139,7 @@
           <div class="template1-about">
             <h3 *ngIf="details.about">About</h3>
             {{details.about}}
-            <h3>Contact</h3>
+            <h3 *ngIf="details.address || details.email || details.phone_number">Contact</h3>
             <div *ngIf="details.address">
               <h4>Address</h4>
               <span>{{details.address}}</span>
@@ -179,7 +181,7 @@
           <h2 class="name">{{details.name}} {{details.surname}}</h2>
 
           <div class="experience">
-            <h3>Experience</h3>
+            <h3 *ngIf="details.experience">Experience</h3>
 
             <div class="experience-details" *ngFor="let item of details.experience">
               <p class="experience-role">{{item.role}}</p>

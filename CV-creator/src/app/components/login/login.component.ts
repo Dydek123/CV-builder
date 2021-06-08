@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {AuthService} from "../auth.service";
-import {User} from '../model/User';
+import {AuthService} from "../../auth.service";
+import {User} from '../../model/User';
 import {Router} from "@angular/router";
 import {FormControl, Validators} from '@angular/forms';
 
