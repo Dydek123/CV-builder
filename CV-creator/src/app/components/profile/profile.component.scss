@@ -22,6 +22,18 @@ $hyperlinkColor: #001694;
   margin: 0;
 }
 
+.spinner_wrapper{
+  background: $cream;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+}
+mat-spinner{
+  margin: auto;
+  top: 50%;
+}
+
 .container {
   background: $cream;
   width: 100%;
@@ -164,7 +176,7 @@ section {
       padding-bottom: 2rem;
     }
 
-    a {
+    button {
       font-family: 'Lato', sans-serif;
       font-size: 1.5rem;
       color: $hyperlinkColor;

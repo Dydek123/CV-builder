@@ -65,6 +65,13 @@ export class IndexRouter {
             res.json(response);
         })
 
+        this.router.delete('/deleteDetails/:id', async (req: Request, res: Response): Promise<void> => {
+            const {id} = req.params;
+            const response: responseStatus = await this.securityController.deleteDetail(Number(id));
+            res.json(response);
+        })
+
+
         this.router.get('/getUserDetails', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
             const token = extractJWT(req,res,next);
             res.json(await this.securityController.getListOfUserDetails(token.email));

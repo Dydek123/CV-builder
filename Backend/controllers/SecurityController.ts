@@ -85,6 +85,14 @@ export default class SecurityController {
         return this.setSuccessResponse();
     }
 
+    public async deleteDetail(id: number) {
+        const detail = await Details.findOne(id);
+        if (!detail)
+            return this.setErrorResponse('Details does not exist');
+        await Details.remove(detail);
+        return this.setSuccessResponse();
+    }
+
     public async getUser(id: number): Promise<detailsI[]> {
         return await Details.find({id_user: id});
     }
@@ -224,4 +232,5 @@ export default class SecurityController {
     private async checkPassword(enteredPassword: string, databasePassword: string): Promise<boolean> {
         return !await bcrypt.compare(enteredPassword, databasePassword);
     }
+
 }
