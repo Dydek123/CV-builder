@@ -10,14 +10,25 @@ $black: #616263;
   align-items: center;
 }
 
-.container{
+.container {
   @include flexCenter();
   flex-direction: column;
   width: 100%;
   height: 100vh;
   background: $lightgray;
 
-  mat-card{
+  .container-heading {
+    text-decoration: none;
+    color: $darkgray;
+    transition: all .3s ease-in-out;
+
+    &:hover {
+      color: $blue;
+      transform: scale(1.03);
+    }
+  }
+
+  mat-card {
     @include flexCenter();
     background: transparent;
     border: 1px solid $darkgray;
@@ -26,28 +37,55 @@ $black: #616263;
     border-radius: 4px 4px 0 0;
   }
 
-  .signup{
+  .signup {
+
     height: 2rem;
     border-radius: 0 0 4px 4px;
   }
 
-  form{
+  form {
     @include flexCenter();
     flex-direction: column;
     width: 80%;
 
-    mat-form-field{
+    mat-form-field {
       width: 100%;
       margin: 1rem;
     }
-    button{
+
+    button {
       width: 100%;
     }
 
-    a{
+    .forget-password-label {
       width: 100%;
-      padding: 1rem;
-      text-align: right;
+      padding-top: .5rem;
+    }
+
+    a {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+  .message-error {
+    color: red;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .container {
+    mat-card {
+      height: auto;
+      width: 40vw;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .container {
+    mat-card {
+      width: 75vw;
     }
   }
 }

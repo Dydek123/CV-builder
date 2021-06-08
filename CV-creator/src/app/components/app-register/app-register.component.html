@@ -1,0 +1,28 @@
+<div class="container">
+  <a href="/" class="container-heading"><h1>CV-Builder</h1></a>
+  <mat-card>
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <mat-label>Email</mat-label>
+        <input matInput name="email" type="email" [(ngModel)]="email">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Password</mat-label>
+        <input matInput name="password" type="password" [(ngModel)]="password">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Password</mat-label>
+        <input matInput name="repeat-password" type="password" [(ngModel)]="repeatPassword">
+      </mat-form-field>
+
+      <button mat-flat-button color="primary" (click)="onRegister()">Create new account</button>
+    </form>
+  </mat-card>
+  <mat-card class="signup">
+    <p>Already have an account? <a href="/login">Login now!</a></p>
+  </mat-card>
+  <p class="message-error" *ngFor="let error of errors">{{error}}</p>
+  <p class="message-success" *ngIf="message==='success'">{{message}}</p>
+</div>

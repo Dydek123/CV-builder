@@ -1,0 +1,24 @@
+<div class="container">
+  <a href="/" class="container-heading"><h1>CV-Builder</h1></a>
+  <mat-card>
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <mat-label>Email</mat-label>
+        <input matInput name="email" type="email" [(ngModel)]="email">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Password</mat-label>
+        <input matInput name="password" type="password" [(ngModel)]="password">
+      </mat-form-field>
+      <button mat-flat-button color="primary" (click)="onLogin()">Login</button>
+      <mat-error *ngIf="status==='error'">Invalid data</mat-error>
+      <div class="forget-password-label">
+        <a href="#" class="forget-password-label">Forgot your password?</a>
+      </div>
+    </form>
+  </mat-card>
+  <mat-card class="signup">
+    <p>Don't have an account? <a href="/register">Join CV-builder now!</a></p>
+  </mat-card>
+</div>

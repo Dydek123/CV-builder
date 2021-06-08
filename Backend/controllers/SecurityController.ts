@@ -8,28 +8,42 @@ import updateData from "../interfaces/updateData";
 import detailsI from '../interfaces/detailsI';
 import experienceI from "../interfaces/experienceI";
 import {Experience} from "../entity/Experience";
+import authResponse from "../interfaces/authResponse";
+import {UserI} from "../interfaces/userI";
+import signJWT from "../jwt/signJWT";
+import ExperienceI from "../../CV-creator/src/app/model/experienceI";
+
+const bcrypt = require('bcrypt');
 
 export default class SecurityController {
     private passwordMinimalStrength: number = 2.5; // Describe password strength from 0 to 5
     private passwordMinimalLength: number = 6; // Minimal password length
-    public async login_user(login_data: loginData): Promise<responseStatus> {
+
+    public validateToken(token):{status:boolean} {
+        return {status:token.exp>Math.floor(new Date().getTime()/1000)};
+    }
+
+    public async login_user(login_data: loginData): Promise<authResponse> {
+        let token: string | undefined;
         if (!login_data.email || !login_data.password)
-            return this.setErrorResponse('Enter email and password');
-        if (!this.passwordIsStrong(login_data.password))
-            return this.setErrorResponse('New password is too weak');
-        const user = await User.findOne({email: login_data.email, password: login_data.password});
-        if (!user) return this.setErrorResponse('User does not exist');
-        //TODO Start session
-        return this.setSuccessResponse();
+            return this.setErrorResponseForAuth('Enter email and password');
+        const user = await User.findOne({email: login_data.email});
+        if (!user || await this.checkPassword(login_data.password, user.password)) {
+            return this.setErrorResponseForAuth('User does not exist');
+        }
+        token = await signJWT(user, ((err, token) => {
+            if (err) console.log('Unable to authorize');
+        }))
+        return this.setSuccessResponseForAuth(user, token);
     }
 
     public async register_user(register_data: registerData): Promise<responseStatus> {
         if (!register_data.email || !register_data.password || !register_data.repeatPassword)
             return this.setErrorResponse('Enter all data');
-        if (register_data.password !== register_data.repeatPassword)
-            return this.setErrorResponse('Repeat password is not the same');
         if (!this.emailIsValid(register_data.email))
             return this.setErrorResponse('Entered email is not valid');
+        if (register_data.password !== register_data.repeatPassword)
+            return this.setErrorResponse('Repeat password is not the same');
         if (!this.passwordIsStrong(register_data.password))
             return this.setErrorResponse('New password is too weak');
         return await this.createUser(register_data);
@@ -59,32 +73,69 @@ export default class SecurityController {
         return this.setSuccessResponse();
     }
 
-    public async add_user_details(detailsData: detailsI): Promise<responseStatus> {
+    public async add_user_details(detailsData: detailsI, userEmail:string): Promise<responseStatus> {
         if (!Object.keys(detailsData).length) return this.setErrorResponse('Set some data');
+        const user = await this.getUserByEmail(userEmail);
+        detailsData.id_user = user.id_user;
         return this.createNewDetails(detailsData);
     }
 
-    public async edit_user_details(detailsData: detailsI): Promise<responseStatus> {
+    public async edit_user_details(detailsData: detailsI, id: number): Promise<responseStatus> {
         if (!Object.keys(detailsData).length) return this.setErrorResponse('Set some data');
-        await this.setNewDetails(detailsData);
+        await this.setNewDetails(detailsData, id);
         return this.setSuccessResponse();
     }
 
-    public async getUser(id: number) {
-        return await Details.findOne(id);
+    public async deleteDetail(id: number): Promise<responseStatus> {
+        const detail = await Details.findOne(id);
+        if (!detail)
+            return this.setErrorResponse('Details does not exist');
+        await Details.remove(detail);
+        return this.setSuccessResponse();
     }
 
-    public async addNewExperience(experience: experienceI): Promise<responseStatus> {
+    public async getUser(id: number): Promise<detailsI[]> {
+        return await Details.find({id_user: id});
+    }
+
+    public async getUserByEmail(email: string): Promise<UserI> {
+        return await User.findOne({email: email});
+    }
+
+    public async getUserDetail(id: number): Promise<detailsI> {
+        return await Details.findOne({id_detail: id});
+    }
+
+    public async detailsExist(id: number, emailFromJWT:string): Promise<boolean> {
+        const detail:Details = await Details.findOne({id_detail: id});
+        const user:UserI = await this.getUserByEmail(emailFromJWT);
+        return detail !== undefined && detail.id_user === user.id_user;
+    }
+
+    public async getListOfUserDetails(userEmail:string): Promise<detailsI[]> {
+        const user = await this.getUserByEmail(userEmail);
+        return await Details.find({id_user:user.id_user});
+    }
+
+    public async addNewExperience(experience: experienceI, id:number): Promise<responseStatus> {
         if (!Object.keys(experience).length) return this.setErrorResponse('Set some data');
-        return this.createNewExperience(experience, 1); //TODO set id_details
+        return this.createNewExperience(experience, id);
     }
 
-    public async editExperience(experience: experienceI): Promise<responseStatus> {
+    public async editExperience(experience: experienceI, id:number): Promise<responseStatus> {
         if (!Object.keys(experience).length) return this.setErrorResponse('Set some data');
-        return this.setNewExperience(experience);
+        return this.setNewExperience(experience, id);
     }
 
-    public async getExperience(id: number) {
+    public async deleteExperience(id:number): Promise<responseStatus> {
+        const experience = await Experience.findOne(id);
+        if (!experience)
+            return this.setErrorResponse('Experience does not exist');
+        await Experience.remove(experience);
+        return this.setSuccessResponse();
+    }
+
+    public async getExperience(id: number): Promise<ExperienceI[]> {
         return await Experience.find({id_details: id});
     }
 
@@ -93,17 +144,26 @@ export default class SecurityController {
         return {status: 'error', errors: [error]};
     }
 
+    private setErrorResponseForAuth(error: string): authResponse {
+        return {status: 'error', errors: [error], email: null, token: null};
+    }
+
     private setSuccessResponse(): responseStatus {
         return {status: 'success', errors: []}
+    }
+
+    private setSuccessResponseForAuth(user: UserI, token: string | undefined): authResponse {
+        return {status: 'success', errors: [], email: user.email, token: token}
     }
 
     private emailIsValid(email): boolean {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
 
-    private async createUser(register_data: registerData) {
+    private async createUser(register_data: registerData): Promise<responseStatus> {
         const user = new User();
-        user.password = register_data.password;
+        user.password = await bcrypt.hash(register_data.password, 10);
+
         user.email = register_data.email;
         try {
             await User.save(user);
@@ -114,28 +174,24 @@ export default class SecurityController {
     }
 
     private passwordIsStrong(password: string): boolean {
-        //TODO change strength condition
         return !(strength(password) < this.passwordMinimalStrength || password.length < this.passwordMinimalLength);
     }
 
-    private async setNewDetails(detailsData: detailsI): Promise<void> {
-        const details = await Details.findOne(1); // TODO change to id from choose
+    private async setNewDetails(detailsData: detailsI, id: number): Promise<void> {
+        const details = await Details.findOne({id_detail:id});
         const items = ['hard_skills', 'soft_skills', 'name', 'surname', 'email', 'phone_number', 'address', 'about', 'image', 'agreement', 'language'];
         for (const item of items) {
             details[item] = detailsData[item] || null;
         }
-        details.id_user = 1 // TODO id from session
         await Details.save(details);
     }
 
     private async createNewDetails(detailsData: detailsI): Promise<responseStatus> {
         const details = new Details();
-        const items = ['hard_skills', 'soft_skills', 'name', 'surname', 'email', 'phone_number', 'address', 'about', 'image', 'agreement', 'language'];
-        //TODO check if user is logged
+        const items = ['hard_skills', 'soft_skills', 'name', 'surname', 'email', 'phone_number', 'address', 'about', 'image', 'agreement', 'language', 'id_user'];
         for (const item of items) {
             details[item] = detailsData[item] || null;
         }
-        details.id_user = 1; //TODO id from session
         await Details.save(details)
 
         return this.setSuccessResponse();
@@ -143,7 +199,7 @@ export default class SecurityController {
 
     private async createNewExperience(experience: experienceI, id_details: number): Promise<responseStatus> {
         const newExperience = new Experience();
-        const items = ['place', 'start_date', 'end_date', 'description'];
+        const items = ['place', 'start_date', 'end_date', 'description', 'role'];
         for (const item of items) {
             newExperience[item] = experience[item] || null;
         }
@@ -158,9 +214,9 @@ export default class SecurityController {
         }
     }
 
-    private async setNewExperience(experience: experienceI): Promise<responseStatus> {
-        const newExperience = await Experience.findOne(experience.id_experience);
-        const items = ['place', 'start_date', 'end_date', 'description'];
+    private async setNewExperience(experience: experienceI, id:number): Promise<responseStatus> {
+        const newExperience = await Experience.findOne(id);
+        const items = ['place', 'start_date', 'end_date', 'description', 'role'];
         for (const item of items) {
             newExperience[item] = experience[item] || null;
         }
@@ -173,4 +229,9 @@ export default class SecurityController {
             return this.setErrorResponse('Error while creating new experience');
         }
     }
+
+    private async checkPassword(enteredPassword: string, databasePassword: string): Promise<boolean> {
+        return !await bcrypt.compare(enteredPassword, databasePassword);
+    }
+
 }

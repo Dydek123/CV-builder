@@ -13,49 +13,56 @@ $black: #616263;
   align-items: center;
 }
 
-@mixin setBoxShadow($offset){
+@mixin setBoxShadow($offset) {
   box-shadow: $offset abs($offset) $blue;
+}
+
+@mixin setImage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 * {
   margin: 0;
 }
 
-.container{
+.container {
   background: $cream;
   width: 100%;
   overflow: hidden;
 }
 
-.circle{
+.circle {
   position: absolute;
 }
 
-.circle-top-left{
+.circle-top-left {
   left: -100px;
   top: -100px;
 }
 
 .relative-parent {
-  position:relative;
-}
-.hiding-parent {
-  overflow:hidden;
+  position: relative;
 }
 
-.circle-bottom-right{
+.hiding-parent {
+  overflow: hidden;
+}
+
+.circle-bottom-right {
   position: absolute;
   bottom: -60vh;
   left: -3vw;
 }
 
-.top{
+.top {
   width: 100%;
   height: 100vh;
   @include flexCenter();
 }
 
-.box{
+.box {
   @include flexCenter();
   @include setBoxShadow(40px);
   flex-direction: column;
@@ -64,26 +71,27 @@ $black: #616263;
 }
 
 h1,
-h2{
+h2 {
   text-transform: uppercase;
   font-family: 'Josefin Sans', sans-serif;
   font-weight: 700;
   text-align: center;
 }
 
-.box-main{
+.box-main {
   width: 80vw;
   height: 50vh;
-  h1{
+
+  h1 {
     font-size: 3rem;
     height: 30%;
   }
 
-  img{
+  img {
     padding: 2rem 0;
   }
 
-  nav{
+  nav {
     font-family: 'Josefin Sans', sans-serif;
     font-size: 1.5rem;
     list-style-type: none;
@@ -93,13 +101,15 @@ h2{
     text-transform: uppercase;
     padding: 6rem 0 0 0;
     width: 100%;
-    a{
+
+    a {
       text-decoration: none;
       color: black;
       width: 20%;
       text-align: center;
       transition: all .2s ease-in-out;
-      &:hover{
+
+      &:hover {
         color: $darkgray;
         transform: scale(1.1);
       }
@@ -109,10 +119,13 @@ h2{
 
 @media only screen and (max-width: 768px) {
   .box-main {
+    height: auto;
     @include setBoxShadow(20px);
+
     h1 {
       font-size: 2rem;
     }
+
     nav {
       padding-top: 0;
       @include flexCenter();
@@ -125,19 +138,19 @@ h2{
     }
   }
 
-  .circle-top-left{
+  .circle-top-left {
     top: -170px;
     left: -170px;
   }
 
-  .circle-bottom-right{
+  .circle-bottom-right {
     transform: scale(0.5);
     bottom: -70vh;
     left: -50vw;
   }
 }
 
-.why-us{
+.why-us {
   @include flexCenter();
   width: 84vw;
   margin: 8vh auto;
@@ -147,17 +160,17 @@ h2{
   font-family: 'Lato', sans-serif;
   font-size: 1.3rem;
 
-  .why-us__argument{
+  .why-us__argument {
     width: 50%;
     height: 40vh;
     text-align: center;
 
-    img{
+    img {
       width: 100px;
       padding-top: 3rem;
     }
 
-    p{
+    p {
       padding-top: 1rem;
       width: 60%;
       text-align: center;
@@ -165,7 +178,7 @@ h2{
     }
   }
 
-  .why-us__box{
+  .why-us__box {
     @include setBoxShadow(-30px);
     padding: 5vh 2vw;
     height: 25vh;
@@ -173,7 +186,7 @@ h2{
     flex-direction: column;
     align-items: flex-start;
 
-    p{
+    p {
       width: 100%;
       padding-top: 1rem;
       text-align: left;
@@ -181,13 +194,13 @@ h2{
     }
   }
 
-  .why-us__wave-right{
+  .why-us__wave-right {
     position: absolute;
     right: 0;
     bottom: 40%;
   }
 
-  .why-us__wave-left{
+  .why-us__wave-left {
     position: absolute;
     left: 0;
     bottom: 40%;
@@ -195,41 +208,43 @@ h2{
 }
 
 @media only screen and (max-width: 768px) {
-  .why-us{
+  .why-us {
     @include flexCenter();
     width: 90vw;
     margin: 8vh auto;
     height: auto;
     font-size: 1.2rem;
 
-    .why-us__argument{
+    .why-us__argument {
       width: 80%;
       height: auto;
 
-      p{
+      p {
         width: 100%;
       }
     }
 
-    .why-us__box{
+    .why-us__box {
       @include setBoxShadow(-20px);
       height: auto;
-      h2{
+
+      h2 {
         width: 100%;
         text-align: center;
       }
-      p{
+
+      p {
         width: 100%;
       }
     }
 
-    .why-us__wave-right{
+    .why-us__wave-right {
       position: absolute;
       right: 0;
       bottom: 40%;
     }
 
-    .why-us__wave-left{
+    .why-us__wave-left {
       position: absolute;
       left: 0;
       bottom: 40%;
@@ -237,7 +252,7 @@ h2{
   }
 }
 
-section{
+section {
   width: 84vw;
   height: auto;
   margin: auto;
@@ -245,107 +260,157 @@ section{
   flex-direction: column;
   align-items: center;
   font-family: 'Lato', sans-serif;
-  h2{
+
+  h2 {
     font-family: 'Josefin Sans', sans-serif;
     width: 100%;
     font-size: 2.2rem;
   }
-  p{
+
+  p {
     padding-top: 2rem;
     width: 60%;
     text-align: center;
     font-size: 1.3rem;
   }
 
-  .opinions{
-    width: 100%;
+  .what-clients-says__opinions {
+    width: 80%;
+    padding: 5vh 0;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
 
-    div{
-      width: 13%;
-      img{
+    .box {
+      width: 15%;
+      padding: 0;
+      background-size: cover;
+      @include setBoxShadow(8px);
+
+      img {
+        width: 100px;
+      }
+    }
+
+    article {
+      width: 60%;
+      min-height: 30vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      h3 {
+        font-size: 2rem;
+        font-weight: 400;
+        font-family: 'Josefin Sans', sans-serif;
+      }
+
+      p {
         width: 100%;
-      }
-      .wrapper{
-        opacity: 0;
-        z-index: -1;
-        position: relative;
-        width: 0;
-        height: 0;
-      }
-      mat-card{
-        position: absolute;
-        width: 200px;
-        bottom: 10%;
+        text-align: left;
+        font-family: 'Lato', sans-serif;
+        padding-bottom: 2vh;
       }
     }
   }
 }
 
-.templates img{
-  padding-top: 5vh;
+#templates a {
+  position: relative;
+  margin-top: 5vh;
+  background-image: url("../../../assets/cv-example.png");
+  background-size: cover;
   width: 50%;
-  z-index: 1;
+  height: 60vh;
+  transition: all .5s ease-in-out;
+
+  &:hover {
+    transform: translateY(-2vh);
+    height: 62vh;
+  }
 }
 
 @media only screen and (max-width: 768px) {
-  section{
+  section {
     width: 84vw;
     height: auto;
-    h2{
+
+    h2 {
       font-size: 2.2rem;
     }
-    p{
+
+    p {
       padding-top: 2rem;
       width: 100%;
       text-align: center;
       font-size: 1.2rem;
     }
 
-    .opinions{
-      div{
+    .opinions {
+      div {
         width: 25%;
-        img{
+
+        img {
           width: 100%;
         }
       }
     }
 
-    .templates img{
-      width: 50%;
+    .what-clients-says__opinions {
+      width: 80%;
+      height: auto;
+      flex-direction: column;
+
+      .box {
+        width: 100%;
+        height: 50vh;
+        padding: 0;
+        background-size: cover;
+        @include setBoxShadow(8px);
+      }
+
+      article {
+        padding: 2rem 0;
+        width: 100%;
+        min-height: 0vh;
+      }
     }
+  }
+
+  #templates a {
+    width: 90%;
   }
 }
 
-footer{
+footer {
   @include flexCenter();
   flex-direction: column;
   padding-top: 5vh;
   z-index: 100;
   width: 100%;
 
-  .socials{
+  .socials {
     width: 30%;
     @include flexCenter();
     justify-content: space-around;
-    img{
+
+    img {
       width: 5vw;
     }
   }
-  p{
+
+  p {
     font-family: 'Josefin Sans', sans-serif;
     font-size: 1.2rem;
     padding: 1rem 0;
   }
 }
 
-@media only screen and (max-width:768px) {
-  footer .socials{
+@media only screen and (max-width: 768px) {
+  footer .socials {
     width: 50%;
-    img{
+
+    img {
       width: 10vw;
     }
   }
