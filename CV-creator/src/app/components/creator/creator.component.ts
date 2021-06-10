@@ -18,6 +18,8 @@ export class CreatorComponent implements OnInit {
   public userDetailsList: UserDetailsI[] = [];
   public loading: boolean = false;
   public newExperience: ExperienceI = {};
+  public isSaved:boolean = false;
+  public test:string = '';
   private detailsIdFromRoute: number = 0;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
@@ -26,11 +28,12 @@ export class CreatorComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     const routeParams = this.route.snapshot.paramMap;
     this.detailsIdFromRoute = Number(routeParams.get('id')) | 0;
+    this.isSaved = this.detailsIdFromRoute !== 0;
     await this.getDataFromApi(this.detailsIdFromRoute);
   }
 
   changeValues(): void {
-    console.log(this.details.experience)
+    this.details.agreement = (this.test === '1');
   }
 
   saveDetails(): void {

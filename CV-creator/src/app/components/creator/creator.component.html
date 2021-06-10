@@ -7,6 +7,7 @@
       <button mat-button routerLink="/createCV">Create new CV</button>
       <button mat-button color="primary" [matMenuTriggerFor]="menu">CV's</button>
       <button mat-button (click)="openPDF()">Download</button>
+      <button mat-button (click)="changeValues()">Check</button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item *ngFor="let detail of userDetailsList" value="{{detail.id_detail}}" (click)="changeCV($event)">{{detail.name}}</button>
       </mat-menu>
@@ -45,6 +46,16 @@
         <mat-label>Languages</mat-label>
         <input matInput name="phone" type="text" [value]="details.language" [(ngModel)]="details.language">
       </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Agreement</mat-label>
+        <mat-select name='agreement' [(ngModel)]="test" (selectionChange)="changeValues()">
+          <mat-option value="1">Include agreement</mat-option>
+          <mat-option value="2">Don't include agreement</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
       <mat-form-field>
         <mat-label>About me</mat-label>
         <textarea matInput
@@ -95,7 +106,7 @@
         </div>
       </div>
 
-      <div class="cv_experience">
+      <div class="cv_experience" *ngIf="isSaved">
         <mat-divider></mat-divider>
         <mat-form-field>
           <mat-label>Role</mat-label>
