@@ -30,4 +30,8 @@ export class MainPageComponent {
     this.authService.logout();
     this.is_logged = false;
   }
+
+  scrollToTop() {
+    document.documentElement.scrollTop = 0;
+  }
 }

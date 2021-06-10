@@ -13,6 +13,7 @@
       <button mat-button (click)="saveDetails()">Save</button>
     </nav>
     <form (change)="changeValues()">
+
       <mat-form-field>
         <mat-label>First name</mat-label>
         <input matInput name="name" [value]="details.name" [(ngModel)]="details.name">
@@ -21,30 +22,7 @@
         <mat-label>Second name</mat-label>
         <input matInput name="surname" [value]="details.surname" [(ngModel)]="details.surname">
       </mat-form-field>
-      <mat-form-field>
-        <mat-label>Hard Skills</mat-label>
-        <input matInput name="hardSkills" [value]="details.hard_skills" [(ngModel)]="details.hard_skills">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Soft Skills</mat-label>
-        <input matInput name="softSkills" [value]="details.soft_skills" [(ngModel)]="details.soft_skills">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Email</mat-label>
-        <input matInput name="email" type="email" [value]="details.email" [(ngModel)]="details.email">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Phone number</mat-label>
-        <input matInput name="phone" type="tel" [value]="details.phone_number" [(ngModel)]="details.phone_number">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Address</mat-label>
-        <input matInput name="address" type="text" [value]="details.address" [(ngModel)]="details.address">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Languages</mat-label>
-        <input matInput name="phone" type="text" [value]="details.language" [(ngModel)]="details.language">
-      </mat-form-field>
+
       <mat-form-field>
         <mat-label>About me</mat-label>
         <textarea matInput
@@ -57,6 +35,45 @@
                   [(ngModel)]="details.about"
         ></textarea>
       </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Address</mat-label>
+        <input matInput name="address" type="text" [value]="details.address" [(ngModel)]="details.address">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput name="email" type="email" [value]="details.email" [(ngModel)]="details.email">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Phone number</mat-label>
+        <input matInput name="phone" type="tel" [value]="details.phone_number" [(ngModel)]="details.phone_number">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Hard Skills</mat-label>
+        <input matInput name="hardSkills" [value]="details.hard_skills" [(ngModel)]="details.hard_skills">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Soft Skills</mat-label>
+        <input matInput name="softSkills" [value]="details.soft_skills" [(ngModel)]="details.soft_skills">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Languages</mat-label>
+        <input matInput name="phone" type="text" [value]="details.language" [(ngModel)]="details.language">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Agreement</mat-label>
+        <mat-select name='agreement' [(ngModel)]="test" (selectionChange)="changeValues()">
+          <mat-option value="1">Include agreement</mat-option>
+          <mat-option value="2">Don't include agreement</mat-option>
+        </mat-select>
+      </mat-form-field>
+
 
       <div class="cv_experience" *ngFor="let experience of details.experience">
         <mat-divider></mat-divider>
@@ -95,7 +112,7 @@
         </div>
       </div>
 
-      <div class="cv_experience">
+      <div class="cv_experience" *ngIf="isSaved">
         <mat-divider></mat-divider>
         <mat-form-field>
           <mat-label>Role</mat-label>

@@ -37,15 +37,15 @@ export default class SecurityController {
         return this.setSuccessResponseForAuth(user, token);
     }
 
-    public async register_user(register_data: registerData): Promise<responseStatus> {
+    public async register_user(register_data: registerData): Promise<authResponse> {
         if (!register_data.email || !register_data.password || !register_data.repeatPassword)
-            return this.setErrorResponse('Enter all data');
+            return this.setErrorResponseForAuth('Enter all data');
         if (!this.emailIsValid(register_data.email))
-            return this.setErrorResponse('Entered email is not valid');
+            return this.setErrorResponseForAuth('Entered email is not valid');
         if (register_data.password !== register_data.repeatPassword)
-            return this.setErrorResponse('Repeat password is not the same');
+            return this.setErrorResponseForAuth('Repeat password is not the same');
         if (!this.passwordIsStrong(register_data.password))
-            return this.setErrorResponse('New password is too weak');
+            return this.setErrorResponseForAuth('New password is too weak');
         return await this.createUser(register_data);
     }
 
@@ -160,16 +160,20 @@ export default class SecurityController {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
 
-    private async createUser(register_data: registerData): Promise<responseStatus> {
+    private async createUser(register_data: registerData): Promise<authResponse> {
         const user = new User();
         user.password = await bcrypt.hash(register_data.password, 10);
 
         user.email = register_data.email;
         try {
             await User.save(user);
-            return this.setSuccessResponse();
+            let token;
+            token = await signJWT(user, ((err, token) => {
+                if (err) console.log('Unable to authorize');
+            }))
+            return this.setSuccessResponseForAuth(user, token);
         } catch (error) {
-            return this.setErrorResponse('Email is not unique');
+            return this.setErrorResponseForAuth('Email is not unique');
         }
     }
 

@@ -24,7 +24,9 @@ import {MatRadioModule} from '@angular/material/radio';
 import {CreatorComponent} from './components/creator/creator.component';
 import {AuthInterceptor} from "./interceptor/auth.interceptor";
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatSelectModule} from '@angular/material/select';
 import {MatDividerModule} from '@angular/material/divider';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,8 @@ import {MatDividerModule} from '@angular/material/divider';
     MatMenuModule,
     MatProgressSpinnerModule,
     MatDividerModule,
+    MatSelectModule,
+    MatIconModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

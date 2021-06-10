@@ -4,22 +4,21 @@ import {User} from "./model/User"
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {authResponse} from "./model/authResponse";
+import {environment} from "../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:8080/'
-
   constructor(private httpClient: HttpClient) {
   }
 
   login(model: User): Observable<authResponse> {
-    return this.saveUser(model, this.baseUrl + 'login');
+    return this.saveUser(model, environment.api_url + 'login');
   }
 
   register(model: User): Observable<User> {
-    return this.saveUser(model, this.baseUrl + 'register');
+    return this.saveUser(model, environment.api_url + 'register');
   }
 
   logout() {
@@ -30,7 +29,7 @@ export class AuthService {
   isAuthenticated(): boolean {
     try {
       if (localStorage.getItem('user')) {
-        this.httpClient.get<{ status: boolean }>(this.baseUrl + 'validateToken')
+        this.httpClient.get<{ status: boolean }>(environment.api_url + 'validateToken')
           .subscribe(
             data => console.log('success', data),
             error => console.log('oops', error)
@@ -52,7 +51,7 @@ export class AuthService {
           localStorage.setItem('user', JSON.stringify(auth));
           return auth;
         }
-        return {status: response.status};
+        return {status: response.status, errors: response.errors};
       })
     );
   }
