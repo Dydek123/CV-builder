@@ -4,6 +4,7 @@ import {AuthService} from "../../auth.service";
 import {User} from '../../model/User';
 import {Router} from "@angular/router";
 import {FormControl, Validators} from '@angular/forms';
+import {authResponse} from "../../model/authResponse";
 
 @Component({
   selector: 'app-login',
@@ -27,7 +28,7 @@ export class LoginComponent {
     this.status = '';
     const user: User = {email: this.email, password: this.password}
     this.authService.login(user)
-      .subscribe(data => {
+      .subscribe((data:authResponse) => {
         if (data.status === 'success') this.router.navigate([''])
         this.status = data.status;
       });
