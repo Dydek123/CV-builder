@@ -34,7 +34,7 @@ export class IndexRouter {
 
         this.router.post('/register', async (req: Request, res: Response): Promise<void> => {
             const body: registerData = req.body;
-            const response: responseStatus = await this.securityController.register_user(body);
+            const response: authResponse = await this.securityController.register_user(body);
             res.json(response);
         })
 
