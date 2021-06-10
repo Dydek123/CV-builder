@@ -25,6 +25,7 @@ export class ProfileComponent{
         this.details = response;
         this.userPhoto ='example_photo.jpg';
         this.loading = false;
+        console.log(this.details)
       })
   }
 
@@ -58,8 +59,15 @@ export class ProfileComponent{
     this.http.delete<responseStatus>('http://localhost:8080/deleteDetails/' + detailId)
       .subscribe((response) => {
         if (response.status == 'success'){
-          window.location.reload();
+          this.updateProjectList(detailId);
         }
       })
+  }
+
+  private updateProjectList(detailId:string):void {
+    for (const detailsKey in this.details) {
+      if (this.details[Number(detailsKey)].id_detail === Number(detailId))
+        this.details.splice(Number(detailsKey),1);
+    }
   }
 }
