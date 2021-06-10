@@ -7,6 +7,7 @@ import experienceI from "../../model/experienceI";
 import {ActivatedRoute, Router} from "@angular/router";
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-creator',
@@ -39,13 +40,13 @@ export class CreatorComponent implements OnInit {
   saveDetails(): void {
     const action = this.detailsIdFromRoute === 0 ? 'addDetails' : `editDetails/${this.details.id_detail}`;
     if (this.detailsIdFromRoute === 0)
-      this.http.post<UserDetailsI>(`http://localhost:8080/${action}`, this.details)
+      this.http.post<UserDetailsI>(`${environment.api_url}${action}`, this.details)
         .subscribe((response) => {
           this.details = response;
           this.goToNewCV();
         })
     else
-      this.http.put<UserDetailsI>(`http://localhost:8080/${action}`, this.details)
+      this.http.put<UserDetailsI>(`${environment.api_url}${action}`, this.details)
         .subscribe((response) => {
           this.details = response;
           window.location.reload();
@@ -53,7 +54,7 @@ export class CreatorComponent implements OnInit {
   }
 
   private goToNewCV():void{
-    this.http.get<userDetailsI[]>('http://localhost:8080/getUserDetails')
+    this.http.get<userDetailsI[]>(`${environment.api_url}getUserDetails`)
       .subscribe((response) => {
         this.userDetailsList = response;
         const newDetail = response.reverse()[0];
@@ -66,24 +67,24 @@ export class CreatorComponent implements OnInit {
     this.loading = true;
     await this.detailsExists(id);
     if (this.detailsIdFromRoute !== 0) {
-      await this.http.get<UserDetailsI>('http://localhost:8080/getUserDetails/' + id)
+      await this.http.get<UserDetailsI>(`${environment.api_url}getUserDetails/${id}`)
         .subscribe((response) => {
           this.details = response;
         })
 
-      await this.http.get<ExperienceI[]>('http://localhost:8080/getExperience/' + id)
+      await this.http.get<ExperienceI[]>(`${environment.api_url}getExperience/${id}`)
         .subscribe((response) => {
           this.details.experience = response;
         })
 
-      await this.http.get<experienceI[]>('http://localhost:8080/getExperience/' + id)
+      await this.http.get<experienceI[]>(`${environment.api_url}getExperience/${id}`)
         .subscribe((response) => {
           this.details.experience = response;
           this.changeDateFormat();
         })
     }
 
-    await this.http.get<userDetailsI[]>('http://localhost:8080/getUserDetails')
+    await this.http.get<userDetailsI[]>(`${environment.api_url}getUserDetails`)
       .subscribe((response) => {
         this.userDetailsList = response;
         this.loading = false;
@@ -111,25 +112,25 @@ export class CreatorComponent implements OnInit {
     const button = event.target as HTMLButtonElement;
     const experienceId = button.value;
     console.log(experienceId)
-    this.http.delete<ExperienceI>(`http://localhost:8080/deleteExperience/` + experienceId)
+    this.http.delete<ExperienceI>(`${environment.api_url}deleteExperience/${experienceId}`)
       .subscribe((response) => {
-        console.log(this.details.experience)
+        this.updateExperienceList(Number(experienceId));
       })
   }
 
   saveExperience(event: Event):void {
     const button = event.target as HTMLButtonElement;
     const experienceId = button.value;
-    const experience: ExperienceI | null = this.searchForExperience(Number(experienceId));
+    let experience: ExperienceI | null = this.searchForExperience(Number(experienceId));
     if (experience !== null)
-      this.http.put<ExperienceI>(`http://localhost:8080/editExperience/` + experienceId, experience)
+      this.http.put<ExperienceI>(`${environment.api_url}editExperience/${experienceId}`, experience)
         .subscribe((response) => {
         })
   }
 
 
   private async detailsExists(id: number): Promise<void> {
-    await this.http.get<boolean>('http://localhost:8080/detailsExists/' + id)
+    await this.http.get<boolean>(`${environment.api_url}detailsExists/${id}`)
       .subscribe((response) => {
         if (!response) this.router.navigate(['createCV']);
       });
@@ -145,9 +146,9 @@ export class CreatorComponent implements OnInit {
 
   createExperience():void {
     console.log(this.newExperience)
-    this.http.post<ExperienceI>(`http://localhost:8080/addExperience/` + this.detailsIdFromRoute, this.newExperience)
+    this.http.post<ExperienceI>(`${environment.api_url}addExperience/${this.detailsIdFromRoute}`, this.newExperience)
       .subscribe((response) => {
-        this.details.experience?.push(this.newExperience)
+        window.location.reload();
       })
   }
 
@@ -166,6 +167,13 @@ export class CreatorComponent implements OnInit {
 
         PDF.save('CV.pdf');
       });
+    }
+  }
+
+  private updateExperienceList(experienceId: number): void {
+    for (const routeKey in this.details.experience) {
+      if (this.details.experience[Number(routeKey)].id_experience === experienceId)
+        this.details.experience?.splice(Number(routeKey),1)
     }
   }
 }

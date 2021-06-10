@@ -23,7 +23,7 @@ export class ProfileComponent{
     this.http.get<detailsI[]>('http://localhost:8080/getUserDetails')
       .subscribe((response) => {
         this.details = response;
-        this.userPhoto = response[0].image || 'example_photo.jpg';
+        this.userPhoto ='example_photo.jpg';
         this.loading = false;
       })
   }
