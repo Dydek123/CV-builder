@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,7 @@ export class AppRegisterComponent {
   message: string = '';
   errors: string[] = [];
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
   }
 
   onRegister():void {
@@ -25,6 +26,7 @@ export class AppRegisterComponent {
       .subscribe((responese) => {
         this.message = responese.status;
         this.errors = responese.errors;
+        if (responese.status === 'success') this.router.navigate(['login'])
       })
   }
 }
