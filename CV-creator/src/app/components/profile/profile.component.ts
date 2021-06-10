@@ -5,6 +5,7 @@ import {EditDetailsComponent} from "./edit_details/edit_details.component";
 import {HttpClient} from "@angular/common/http";
 import detailsI from "../../../../../Backend/interfaces/detailsI";
 import responseStatus from "../../model/responseStatus";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-profile',
@@ -20,7 +21,7 @@ export class ProfileComponent{
 
   ngOnInit() {
     this.loading = true;
-    this.http.get<detailsI[]>('http://localhost:8080/getUserDetails')
+    this.http.get<detailsI[]>(`${environment.api_url}getUserDetails`)
       .subscribe((response) => {
         this.details = response;
         this.userPhoto ='example_photo.jpg';
@@ -49,14 +50,14 @@ export class ProfileComponent{
   copyLink(event: Event):void{
     const button = event.target as HTMLButtonElement;
     const detailId = button.value;
-    navigator.clipboard.writeText('http://localhost:4200/createCV/'+detailId)
+    navigator.clipboard.writeText(`${environment.api_url}createCV/${detailId}`)
       .then(() => alert('Successfully copied'))
   }
 
   deleteProject(event: Event):void {
     const button = event.target as HTMLButtonElement;
     const detailId = button.value;
-    this.http.delete<responseStatus>('http://localhost:8080/deleteDetails/' + detailId)
+    this.http.delete<responseStatus>(`${environment.api_url}deleteDetails/${detailId}`)
       .subscribe((response) => {
         if (response.status == 'success'){
           this.updateProjectList(detailId);
