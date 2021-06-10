@@ -33,6 +33,13 @@ $black: #616263;
   overflow: hidden;
 }
 
+.back-home-button{
+  position: fixed;
+  z-index: 1000;
+  bottom: 5%;
+  right: 3%;
+}
+
 .circle {
   position: absolute;
 }
