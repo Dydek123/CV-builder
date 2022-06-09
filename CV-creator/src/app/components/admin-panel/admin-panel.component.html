@@ -1,0 +1,14 @@
+<div class="container">
+  <a href="/" class="container-heading"><h1>CV-Builder</h1></a>
+  <mat-card>
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <mat-label>User email to remove</mat-label>
+        <input matInput name="email" type="email" [(ngModel)]="email">
+      </mat-form-field>
+
+      <button mat-flat-button color="primary" (click)="onSubmit()">Remove</button>
+      <mat-error *ngIf="message">{{message}}</mat-error>
+    </form>
+  </mat-card>
+</div>
