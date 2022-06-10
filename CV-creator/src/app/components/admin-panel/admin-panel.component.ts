@@ -33,7 +33,7 @@ export class AdminPanelComponent {
         if (data.status === 'success') {
           this.message = 'User has been succesfully removed'
         } else {
-          this.message = data.status;
+          this.message = data && data.errors ? data.errors[0] : '';
         }
       });
   }

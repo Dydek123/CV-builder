@@ -8,6 +8,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import {environment} from "../../../environments/environment";
+import { CreatorService } from 'src/app/service/creator.service';
 
 @Component({
   selector: 'app-creator',
@@ -23,7 +24,10 @@ export class CreatorComponent implements OnInit {
   public test:string = '';
   private detailsIdFromRoute: number = 0;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
+  constructor(private http: HttpClient,
+              private route: ActivatedRoute,
+              private router: Router,
+              private creatorService: CreatorService) {
   };
 
   async ngOnInit(): Promise<void> {
@@ -40,21 +44,18 @@ export class CreatorComponent implements OnInit {
   saveDetails(): void {
     const action = this.detailsIdFromRoute === 0 ? 'addDetails' : `editDetails/${this.details.id_detail}`;
     if (this.detailsIdFromRoute === 0)
-      this.http.post<UserDetailsI>(`${environment.api_url}${action}`, this.details)
+      this.creatorService.saveDetails(action, this.details)
         .subscribe((response) => {
           this.details = response;
           this.goToNewCV();
         })
     else
-      this.http.put<UserDetailsI>(`${environment.api_url}${action}`, this.details)
-        .subscribe((response) => {
-          this.details = response;
-          window.location.reload();
-        })
+      this.creatorService.editDetails(action, this.details)
+        .subscribe();
   }
 
   private goToNewCV():void{
-    this.http.get<userDetailsI[]>(`${environment.api_url}getUserDetails`)
+    this.creatorService.getUserDetails()
       .subscribe((response) => {
         this.userDetailsList = response;
         const newDetail = response.reverse()[0];
@@ -66,30 +67,29 @@ export class CreatorComponent implements OnInit {
   private async getDataFromApi(id: number):Promise<void> {
     this.loading = true;
     await this.detailsExists(id);
+    this.getCVDetails(id);
+  }
+
+  async getCVDetails(id: number) {
     if (this.detailsIdFromRoute !== 0) {
-      await this.http.get<UserDetailsI>(`${environment.api_url}getUserDetails/${id}`)
+       this.creatorService.getUserDetailsById(id)
         .subscribe((response) => {
           this.details = response;
         })
 
-      await this.http.get<ExperienceI[]>(`${environment.api_url}getExperience/${id}`)
-        .subscribe((response) => {
-          this.details.experience = response;
-        })
-
-      await this.http.get<experienceI[]>(`${environment.api_url}getExperience/${id}`)
+      this.creatorService.getExperience(id)
         .subscribe((response) => {
           this.details.experience = response;
           this.changeDateFormat();
         })
     }
 
-    await this.http.get<userDetailsI[]>(`${environment.api_url}getUserDetails`)
+    this.creatorService.getUserDetails()
       .subscribe((response) => {
         this.userDetailsList = response;
         this.loading = false;
       })
-  }
+    }
 
   async changeCV(event: Event):Promise<void>{
     const button = event.target as HTMLButtonElement;
@@ -111,8 +111,7 @@ export class CreatorComponent implements OnInit {
   deleteExperience(event: Event):void {
     const button = event.target as HTMLButtonElement;
     const experienceId = button.value;
-    console.log(experienceId)
-    this.http.delete<ExperienceI>(`${environment.api_url}deleteExperience/${experienceId}`)
+    this.creatorService.deleteExperience(experienceId)
       .subscribe((response) => {
         this.updateExperienceList(Number(experienceId));
       })
@@ -123,14 +122,13 @@ export class CreatorComponent implements OnInit {
     const experienceId = button.value;
     let experience: ExperienceI | null = this.searchForExperience(Number(experienceId));
     if (experience !== null)
-      this.http.put<ExperienceI>(`${environment.api_url}editExperience/${experienceId}`, experience)
-        .subscribe((response) => {
-        })
+      this.creatorService.saveExperience(experienceId, experience)
+        .subscribe();
   }
 
 
   private async detailsExists(id: number): Promise<void> {
-    await this.http.get<boolean>(`${environment.api_url}detailsExists/${id}`)
+    this.creatorService.detailsExists(id)
       .subscribe((response) => {
         if (!response) this.router.navigate(['createCV']);
       });
@@ -145,8 +143,7 @@ export class CreatorComponent implements OnInit {
   }
 
   createExperience():void {
-    console.log(this.newExperience)
-    this.http.post<ExperienceI>(`${environment.api_url}addExperience/${this.detailsIdFromRoute}`, this.newExperience)
+    this.creatorService.createExperience(this.detailsIdFromRoute, this.newExperience)
       .subscribe((response) => {
         window.location.reload();
       })

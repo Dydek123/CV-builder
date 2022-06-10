@@ -6,6 +6,7 @@ import {HttpClient} from "@angular/common/http";
 import detailsI from "../../../../../Backend/interfaces/detailsI";
 import responseStatus from "../../model/responseStatus";
 import {environment} from "../../../environments/environment";
+import { ProfileService } from 'src/app/service/profile.service';
 
 @Component({
   selector: 'app-profile',
@@ -17,34 +18,28 @@ export class ProfileComponent{
   public loading:boolean = false;
   userPhoto = ''
 
-  constructor(public dialog:MatDialog, private http: HttpClient) {};
+  constructor(public dialog:MatDialog,
+              private http: HttpClient,
+              private profileService: ProfileService) {};
 
   ngOnInit() {
     this.loading = true;
-    this.http.get<detailsI[]>(`${environment.api_url}getUserDetails`)
+    this.profileService.getUserDetails()
       .subscribe((response) => {
         this.details = response;
         this.userPhoto ='example_photo.jpg';
         this.loading = false;
-        console.log(this.details)
       })
   }
 
   openNewPhotoDialog(): void {
     const dialogRef = this.dialog.open(DialogComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+    dialogRef.afterClosed().subscribe();
   }
 
   openEditDetailsDialog($event: any): void {
-    console.log($event)
     const dialogRef = this.dialog.open(EditDetailsComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+    dialogRef.afterClosed().subscribe();
   }
 
   copyLink(event: Event):void{
@@ -57,7 +52,7 @@ export class ProfileComponent{
   deleteProject(event: Event):void {
     const button = event.target as HTMLButtonElement;
     const detailId = button.value;
-    this.http.delete<responseStatus>(`${environment.api_url}deleteDetails/${detailId}`)
+    this.profileService.deleteProject(detailId)
       .subscribe((response) => {
         if (response.status == 'success'){
           this.updateProjectList(detailId);
